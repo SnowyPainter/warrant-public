@@ -1,0 +1,22 @@
+{
+  "accuracy": 0.005799,
+  "dataset": "gowalla",
+  "domain": "stpp",
+  "effective_implementation": "TransformerSTPP",
+  "elapsed_sec": 38.659,
+  "eval_loss": 26.894529,
+  "examples": 50005.0,
+  "implementation": "reference",
+  "joint_nll": 26.894529,
+  "mae_time": 0.593585,
+  "model": "Transformer-STPP",
+  "output_dir": "experiments/main_benchmark/outputs/Transformer-STPP/37/stpp/gowalla/warrant",
+  "primary_metric": 0.045467,
+  "rmse_location": 0.045467,
+  "seed": 37,
+  "status": "completed",
+  "train_loss": 1.932814,
+  "variant": "warrant",
+  "warrant_active_blocks": 1.0,
+  "warrant_replacements": 0.0
+}

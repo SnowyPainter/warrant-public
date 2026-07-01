@@ -1,0 +1,163 @@
+experiment:
+  name: main_benchmark
+  seeds: [7, 17, 37]
+  device: cuda:0
+  output_root: experiments/main_benchmark/outputs
+  skip_completed: true
+  hardware:
+    gpu: NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition
+    vram_mib: 97887
+
+selection:
+  domains: all
+  datasets: all
+  models: all
+  variants: [base, warrant]
+
+training:
+  implementation: reference
+  progress: true
+  max_examples: 65536
+  epochs: 30
+  batch_size: 2048
+  learning_rate: 0.001
+  weight_decay: 0.0
+  history_len: 50
+  eval_ratio: 0.2
+  num_workers: 0
+  save_checkpoint: false
+
+warrant:
+  context_schema: none
+  context_fields: []
+  gate_init: 0.95
+  gate_leak: 0.05
+  aux_weight: 0.0
+
+stpp:
+  gate_loss_weight: 0.0
+
+tkg:
+  gate_loss_weight: 0.0
+  strict_time_history: false
+
+paths:
+  processed_root: data/processed
+
+datasets:
+  ctdg:
+    wikipedia: data/processed/ctdg/wikipedia/events.csv
+    mooc: data/processed/ctdg/mooc/events.csv
+    lastfm: data/processed/ctdg/lastfm/events.csv
+  mtpp:
+    stackoverflow: data/processed/mtpp/stackoverflow/events.csv
+    retweets: data/processed/mtpp/retweets/events.csv
+  stpp:
+    earthquake: data/processed/stpp/earthquake/events.csv
+    gowalla: data/processed/stpp/gowalla/events.csv
+  tkg:
+    icews14: data/processed/tkg/icews14/facts.csv
+    icews18: data/processed/tkg/icews18/facts.csv
+    gdelt: data/processed/tkg/gdelt/facts.csv
+  rag:
+    hotpotqa: data/processed/rag/hotpotqa/examples.jsonl
+
+models:
+  ctdg:
+    TGAT:
+      num_nodes: auto
+      edge_feat_dim: 1
+      hidden_dim: 128
+      time_dim: 32
+    DyGFormer:
+      num_nodes: auto
+      edge_feat_dim: 1
+      hidden_dim: 128
+      time_dim: 32
+      num_layers: 2
+    GraphMixer:
+      num_nodes: auto
+      edge_feat_dim: 1
+      hidden_dim: 128
+      time_dim: 32
+      mixer_layers: 2
+  mtpp:
+    SAHP:
+      num_event_types: auto
+      hidden_dim: 128
+      time_dim: 32
+    THP:
+      num_event_types: auto
+      hidden_dim: 128
+      time_dim: 32
+      num_layers: 2
+    AttNHP:
+      num_event_types: auto
+      hidden_dim: 128
+      time_dim: 32
+      num_heads: 4
+  stpp:
+    Transformer-STPP:
+      num_marks: auto
+      hidden_dim: 128
+      time_dim: 32
+      num_layers: 2
+    NSTPP:
+      num_marks: auto
+      hidden_dim: 128
+      time_dim: 32
+    DeepSTPP:
+      num_marks: auto
+      hidden_dim: 128
+      time_dim: 32
+  tkg:
+    RE-NET:
+      num_entities: auto
+      num_relations: auto
+      hidden_dim: 128
+      time_dim: 32
+    xERTE:
+      num_entities: auto
+      num_relations: auto
+      hidden_dim: 128
+      time_dim: 32
+      expansion_layers: 2
+    CyGNet:
+      num_entities: auto
+      num_relations: auto
+      hidden_dim: 128
+      time_dim: 32
+      learning_rate: 0.0005
+      warrant_learning_rate: 0.0003
+      gradient_clip: 0.5
+  rag:
+    FiD:
+      vocab_size: 32128
+      hidden_dim: 96
+      fusion_layers: 1
+      batch_size: 512
+      eval_batch_size: 512
+      gate_leak: 0.7
+      max_passages: 5
+      question_len: 32
+      passage_len: 48
+      support_loss_weight: 1.0
+      gate_loss_weight: 0.0
+    LED:
+      vocab_size: 50265
+      hidden_dim: 96
+      encoder_layers: 1
+      batch_size: 256
+      eval_batch_size: 256
+      gate_leak: 0.7
+      max_passages: 5
+      question_len: 32
+      passage_len: 48
+      support_loss_weight: 1.0
+      gate_loss_weight: 0.0
+
+variants:
+  base:
+    use_warrant: false
+  warrant:
+    use_warrant: true

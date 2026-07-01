@@ -1,0 +1,21 @@
+{
+  "spec": {
+    "dataset": "retweets",
+    "dataset_path": "/workspace/warrant/data/processed/mtpp/retweets/events.csv",
+    "domain": "mtpp",
+    "implementation": "reference",
+    "model": "AttNHP",
+    "model_config": {
+      "hidden_dim": 128,
+      "num_event_types": "auto",
+      "num_heads": 4,
+      "time_dim": 32
+    },
+    "seed": 37,
+    "use_warrant": true,
+    "variant": "generic_qk_warrant"
+  },
+  "variant": {
+    "description": "Warrant is enabled only on generic query-key attention; the domain-localized metric path is disabled."
+  }
+}

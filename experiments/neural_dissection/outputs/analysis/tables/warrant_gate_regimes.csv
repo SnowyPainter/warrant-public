@@ -1,0 +1,6 @@
+domain,dataset,model,primary_metric,direction,final_primary,final_gate_mean,gate_slope,final_warrant_logit_mean,regime
+ctdg,lastfm,DyGFormer,auc,higher,0.8231812207104066,0.8781571984291077,0.04273808002471924,7.798169136047363,"selective, opening"
+mtpp,retweets,AttNHP,mark_mrr,higher,0.7668384887815751,0.1267193704843521,5.1245093345725357e-05,0.385554552078247,suppressive
+rag,hotpotqa,LED,support_mrr,higher,0.5535064147018031,0.8493942788669041,-0.10421956436974666,-0.0647048471894647,"selective, closing"
+stpp,earthquake,Transformer-STPP,rmse_location,lower,1.5543049409569347,0.8487962484359741,-0.08738112449645985,2.0897130966186523,"selective, closing"
+tkg,icews18,xERTE,mrr,higher,0.0733311442580764,0.9652963876724244,0.015196442604065052,4.233778953552246,open / near-identity

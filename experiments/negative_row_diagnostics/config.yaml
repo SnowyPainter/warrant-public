@@ -1,0 +1,78 @@
+experiment:
+  name: negative_row_diagnostics
+  seeds: [7, 17, 37]
+  device: cuda:0
+  output_root: experiments/negative_row_diagnostics/outputs
+  skip_completed: true
+
+selection:
+  domains: all
+  variants: all
+
+training:
+  implementation: reference
+  progress: true
+  max_examples: 12000
+  epochs: 10
+  batch_size: 2048
+  learning_rate: 0.001
+  weight_decay: 0.0
+  history_len: 50
+  eval_ratio: 0.2
+  dropout: 0.1
+  save_checkpoint: true
+  checkpoint_name: checkpoint.pt
+
+warrant:
+  gate_init: 0.95
+  gate_leak: 0.05
+
+tkg:
+  strict_time_history: false
+
+variants:
+  base:
+    description: No Warrant and no localized permission path.
+  generic_qk_warrant:
+    description: Warrant is enabled only on generic query-key attention; the domain-localized metric path is disabled.
+  open_path_no_gate:
+    description: The localized metric-facing contribution path is opened with g=1 and no learned permission gate.
+  correct_path_warrant:
+    description: Warrant is placed on the metric-facing weighted value path.
+  shuffled_pairing:
+    description: The correct path is kept, but query-item pairing is deliberately mismatched at evaluation.
+
+tasks:
+  stpp:
+    dataset: gowalla
+    path: data/processed/stpp/gowalla/events.csv
+    model: DeepSTPP
+    model_config:
+      num_marks: auto
+      hidden_dim: 128
+      time_dim: 32
+  tkg:
+    dataset: icews18
+    path: data/processed/tkg/icews18/facts.csv
+    model: CyGNet
+    model_config:
+      num_entities: auto
+      num_relations: auto
+      hidden_dim: 128
+      time_dim: 32
+      learning_rate: 0.0005
+      warrant_learning_rate: 0.0003
+      gradient_clip: 0.5
+
+need_score:
+  weights:
+    path_reach_rel: 0.34
+    correct_over_generic_rel: 0.33
+    correct_over_shuffled_rel: 0.33
+
+inputs:
+  main_base_vs_warrant: experiments/main_benchmark/outputs/analysis/tables/base_vs_warrant.csv
+
+plot:
+  stem: negative_row_micro_wns
+  annotate_domains: true

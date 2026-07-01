@@ -1,0 +1,21 @@
+{
+  "accuracy": 0.404847,
+  "dataset": "stackoverflow",
+  "domain": "mtpp",
+  "effective_implementation": "THP",
+  "elapsed_sec": 21.587,
+  "eval_loss": 1.787753,
+  "examples": 64160.0,
+  "implementation": "reference",
+  "mae_time": 0.587925,
+  "mark_mrr": 0.60579,
+  "model": "THP",
+  "output_dir": "experiments/main_benchmark/outputs/THP/37/mtpp/stackoverflow/base",
+  "primary_metric": 0.60579,
+  "seed": 37,
+  "status": "completed",
+  "train_loss": 1.665497,
+  "variant": "base",
+  "warrant_active_blocks": 0.0,
+  "warrant_replacements": 0.0
+}

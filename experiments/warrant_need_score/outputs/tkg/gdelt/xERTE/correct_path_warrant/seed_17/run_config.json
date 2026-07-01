@@ -1,0 +1,22 @@
+{
+  "spec": {
+    "dataset": "gdelt",
+    "dataset_path": "/workspace/warrant/data/processed/tkg/gdelt/facts.csv",
+    "domain": "tkg",
+    "implementation": "reference",
+    "model": "xERTE",
+    "model_config": {
+      "expansion_layers": 2,
+      "hidden_dim": 128,
+      "num_entities": "auto",
+      "num_relations": "auto",
+      "time_dim": 32
+    },
+    "seed": 17,
+    "use_warrant": true,
+    "variant": "correct_path_warrant"
+  },
+  "variant": {
+    "description": "Warrant is placed on the metric-facing weighted value path."
+  }
+}

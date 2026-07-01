@@ -1,0 +1,21 @@
+{
+  "accuracy": 0.544878,
+  "dataset": "retweets",
+  "domain": "mtpp",
+  "effective_implementation": "AttNHP",
+  "elapsed_sec": 25.904,
+  "eval_loss": 193.641869,
+  "examples": 55201.0,
+  "implementation": "reference",
+  "mae_time": 20624.351359,
+  "mark_mrr": 0.761269,
+  "model": "AttNHP",
+  "output_dir": "experiments/main_benchmark/outputs/AttNHP/17/mtpp/retweets/warrant",
+  "primary_metric": 0.761269,
+  "seed": 17,
+  "status": "completed",
+  "train_loss": 195.772035,
+  "variant": "warrant",
+  "warrant_active_blocks": 1.0,
+  "warrant_replacements": 0.0
+}

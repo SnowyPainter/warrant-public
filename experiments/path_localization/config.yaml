@@ -1,0 +1,95 @@
+experiment:
+  name: path_localization
+  seeds: [7]
+  device: cuda:0
+  output_root: experiments/path_localization/outputs
+  skip_completed: true
+
+selection:
+  domains: all
+  variants: all
+
+training:
+  implementation: reference
+  progress: true
+  max_examples: 10000
+  epochs: 10
+  batch_size: 2048
+  learning_rate: 0.001
+  weight_decay: 0.0
+  history_len: 50
+  eval_ratio: 0.2
+  dropout: 0.1
+
+warrant:
+  gate_init: 0.95
+  gate_leak: 0.05
+
+tkg:
+  strict_time_history: false
+
+variants:
+  base:
+    description: No Warrant on the metric-defining weighted value path.
+  generic_qk_warrant:
+    description: Warrant only on generic query-key attention, with the domain-specific metric path disabled.
+  open_path_no_gate:
+    description: Open the localized metric-defining contribution path with g=1 and no learned item-wise permission gate.
+  correct_path_warrant:
+    description: Warrant on the localized metric-defining weighted value path.
+  shuffled_pairing:
+    description: Correct-path Warrant evaluated with query-item pairing deliberately mismatched.
+
+tasks:
+  ctdg:
+    dataset: lastfm
+    path: data/processed/ctdg/lastfm/events.csv
+    model: DyGFormer
+    model_config:
+      num_nodes: auto
+      edge_feat_dim: 1
+      hidden_dim: 128
+      time_dim: 32
+      num_layers: 2
+  mtpp:
+    dataset: retweets
+    path: data/processed/mtpp/retweets/events.csv
+    model: AttNHP
+    model_config:
+      num_event_types: auto
+      hidden_dim: 128
+      time_dim: 32
+      num_heads: 4
+  rag:
+    dataset: hotpotqa
+    path: data/processed/rag/hotpotqa/examples.jsonl
+    model: FiD
+    model_config:
+      vocab_size: 32128
+      hidden_dim: 96
+      fusion_layers: 1
+      batch_size: 512
+      eval_batch_size: 512
+      gate_leak: 0.7
+      max_passages: 5
+      question_len: 32
+      passage_len: 48
+  stpp:
+    dataset: earthquake
+    path: data/processed/stpp/earthquake/events.csv
+    model: DeepSTPP
+    model_config:
+      num_marks: auto
+      hidden_dim: 128
+      time_dim: 32
+      num_layers: 2
+  tkg:
+    dataset: gdelt
+    path: data/processed/tkg/gdelt/facts.csv
+    model: xERTE
+    model_config:
+      num_entities: auto
+      num_relations: auto
+      hidden_dim: 128
+      time_dim: 32
+      expansion_layers: 2

@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.576823,
+  "auc": 0.636367,
+  "dataset": "lastfm",
+  "edge_warrant_attention_entropy": 2.202578,
+  "edge_warrant_gate_mean": 0.999997,
+  "effective_implementation": "DyGFormer",
+  "elapsed_sec": 60.692318,
+  "eval_loss": 0.869645,
+  "model": "DyGFormer",
+  "output_dir": "experiments/edge_query_adapter_ablation/outputs/shuffled_edge_query/seed_37",
+  "primary_metric": 0.636367,
+  "seed": 37,
+  "status": "completed",
+  "train_loss": 0.432241,
+  "variant": "shuffled_edge_query",
+  "warrant_active_blocks": 4.0,
+  "warrant_logit_mean": 10.711025,
+  "warrant_replacements": 2.0
+}

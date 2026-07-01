@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.914747,
+  "auc": 0.966001,
+  "dataset": "mooc",
+  "domain": "ctdg",
+  "effective_implementation": "TGAT",
+  "elapsed_sec": 41.384,
+  "eval_loss": 0.256838,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "TGAT",
+  "output_dir": "experiments/main_benchmark/outputs/TGAT/37/ctdg/mooc/base",
+  "primary_metric": 0.966001,
+  "seed": 37,
+  "status": "completed",
+  "train_loss": 0.166044,
+  "variant": "base",
+  "warrant_active_blocks": 0.0,
+  "warrant_replacements": 0.0
+}

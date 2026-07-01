@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.923177,
+  "auc": 0.975666,
+  "dataset": "mooc",
+  "domain": "ctdg",
+  "effective_implementation": "GraphMixer",
+  "elapsed_sec": 76.111,
+  "eval_loss": 0.224728,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "GraphMixer",
+  "output_dir": "experiments/main_benchmark/outputs/GraphMixer/37/ctdg/mooc/warrant",
+  "primary_metric": 0.975666,
+  "seed": 37,
+  "status": "completed",
+  "train_loss": 0.126131,
+  "variant": "warrant",
+  "warrant_active_blocks": 2.0,
+  "warrant_replacements": 0.0
+}

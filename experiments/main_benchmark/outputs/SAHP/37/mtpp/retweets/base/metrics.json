@@ -1,0 +1,21 @@
+{
+  "accuracy": 0.532742,
+  "dataset": "retweets",
+  "domain": "mtpp",
+  "effective_implementation": "SAHP",
+  "elapsed_sec": 20.957,
+  "eval_loss": 193.56735,
+  "examples": 55201.0,
+  "implementation": "reference",
+  "mae_time": 20594.176052,
+  "mark_mrr": 0.754853,
+  "model": "SAHP",
+  "output_dir": "experiments/main_benchmark/outputs/SAHP/37/mtpp/retweets/base",
+  "primary_metric": 0.754853,
+  "seed": 37,
+  "status": "completed",
+  "train_loss": 196.082282,
+  "variant": "base",
+  "warrant_active_blocks": 0.0,
+  "warrant_replacements": 0.0
+}

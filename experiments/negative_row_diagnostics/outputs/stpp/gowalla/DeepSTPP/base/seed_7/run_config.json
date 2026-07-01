@@ -1,0 +1,20 @@
+{
+  "spec": {
+    "dataset": "gowalla",
+    "dataset_path": "/workspace/warrant/data/processed/stpp/gowalla/events.csv",
+    "domain": "stpp",
+    "implementation": "reference",
+    "model": "DeepSTPP",
+    "model_config": {
+      "hidden_dim": 128,
+      "num_marks": "auto",
+      "time_dim": 32
+    },
+    "seed": 7,
+    "use_warrant": false,
+    "variant": "base"
+  },
+  "variant": {
+    "description": "No Warrant and no localized permission path."
+  }
+}

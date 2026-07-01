@@ -1,0 +1,11 @@
+domain,dataset,model,variant,path_role,seeds,metric_name,direction,primary_mean,primary_std,eval_loss_mean,eval_loss_std
+stpp,gowalla,DeepSTPP,base,no_warrant,3,rmse_location,lower,0.04297,0.005038921412365943,19.860317,0.3145166023662348
+stpp,gowalla,DeepSTPP,generic_qk_warrant,weak_path_generic_attention,3,rmse_location,lower,0.04409866666666667,0.004186178010230017,20.093824333333334,0.11166877587013135
+stpp,gowalla,DeepSTPP,open_path_no_gate,metric_path_open_g_equals_one,3,rmse_location,lower,0.05820433333333333,0.01968815675306689,19.903594666666667,0.17989942892998087
+stpp,gowalla,DeepSTPP,correct_path_warrant,metric_defining_path,3,rmse_location,lower,0.044024,0.009599346696520553,19.694295,0.12069162958548524
+stpp,gowalla,DeepSTPP,shuffled_pairing,query_item_pairing_control,3,rmse_location,lower,1.635721,0.015741916147661305,22.126861,0.17665325145040486
+tkg,icews18,CyGNet,base,no_warrant,3,mrr,higher,0.08871433333333334,0.0006861649461560534,9.417735,0.02939913653493915
+tkg,icews18,CyGNet,generic_qk_warrant,weak_path_generic_attention,3,mrr,higher,0.08821066666666666,0.0010221082786737062,9.418098666666667,0.033256972146202664
+tkg,icews18,CyGNet,open_path_no_gate,metric_path_open_g_equals_one,3,mrr,higher,0.08871433333333334,0.0006861649461560534,9.417735666666667,0.02939812962304457
+tkg,icews18,CyGNet,correct_path_warrant,metric_defining_path,3,mrr,higher,0.08821066666666666,0.0010221082786737062,9.418098666666667,0.033256972146202664
+tkg,icews18,CyGNet,shuffled_pairing,query_item_pairing_control,3,mrr,higher,0.05331966666666667,0.0006573471939038993,9.8439,0.0727364674699012

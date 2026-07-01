@@ -1,0 +1,19 @@
+{
+  "accuracy": 0.0,
+  "dataset": "natural_questions",
+  "domain": "rag",
+  "effective_implementation": "FiD",
+  "elapsed_sec": 105.004,
+  "eval_loss": 10.799038,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "FiD",
+  "output_dir": "experiments/main_benchmark/outputs/FiD/37/rag/natural_questions/warrant",
+  "primary_metric": 0.0,
+  "seed": 37,
+  "status": "completed",
+  "train_loss": 8.859504,
+  "variant": "warrant",
+  "warrant_active_blocks": 3.0,
+  "warrant_replacements": 2.0
+}

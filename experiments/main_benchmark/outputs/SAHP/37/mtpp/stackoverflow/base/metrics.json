@@ -1,0 +1,21 @@
+{
+  "accuracy": 0.405627,
+  "dataset": "stackoverflow",
+  "domain": "mtpp",
+  "effective_implementation": "SAHP",
+  "elapsed_sec": 21.732,
+  "eval_loss": 1.790365,
+  "examples": 64160.0,
+  "implementation": "reference",
+  "mae_time": 0.592611,
+  "mark_mrr": 0.605661,
+  "model": "SAHP",
+  "output_dir": "experiments/main_benchmark/outputs/SAHP/37/mtpp/stackoverflow/base",
+  "primary_metric": 0.605661,
+  "seed": 37,
+  "status": "completed",
+  "train_loss": 1.666454,
+  "variant": "base",
+  "warrant_active_blocks": 0.0,
+  "warrant_replacements": 0.0
+}

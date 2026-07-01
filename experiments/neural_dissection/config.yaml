@@ -1,0 +1,87 @@
+experiment:
+  name: neural_dissection
+  seed: 7
+  device: cuda:0
+  output_root: experiments/neural_dissection/outputs
+
+training:
+  implementation: reference
+  epochs: 10
+  max_examples: 8192
+  batch_size: 2048
+  learning_rate: 0.001
+  weight_decay: 0.0
+  history_len: 50
+  eval_ratio: 0.2
+  progress: true
+
+warrant:
+  gate_init: 0.95
+  gate_leak: 0.05
+  aux_weight: 0.0
+
+tkg:
+  strict_time_history: false
+
+runs:
+  - domain: ctdg
+    dataset: lastfm
+    model: DyGFormer
+    path: data/processed/ctdg/lastfm/events.csv
+  - domain: mtpp
+    dataset: retweets
+    model: AttNHP
+    path: data/processed/mtpp/retweets/events.csv
+  - domain: stpp
+    dataset: earthquake
+    model: Transformer-STPP
+    path: data/processed/stpp/earthquake/events.csv
+  - domain: tkg
+    dataset: icews18
+    model: xERTE
+    path: data/processed/tkg/icews18/facts.csv
+  - domain: rag
+    dataset: hotpotqa
+    model: LED
+    path: data/processed/rag/hotpotqa/examples.jsonl
+
+models:
+  ctdg:
+    DyGFormer:
+      num_nodes: auto
+      edge_feat_dim: 1
+      hidden_dim: 128
+      time_dim: 32
+      num_layers: 2
+  mtpp:
+    AttNHP:
+      num_event_types: auto
+      hidden_dim: 128
+      time_dim: 32
+      num_heads: 4
+  stpp:
+    Transformer-STPP:
+      num_marks: auto
+      hidden_dim: 128
+      time_dim: 32
+      num_layers: 2
+  tkg:
+    xERTE:
+      num_entities: auto
+      num_relations: auto
+      hidden_dim: 128
+      time_dim: 32
+      expansion_layers: 2
+  rag:
+    LED:
+      vocab_size: 50265
+      hidden_dim: 96
+      encoder_layers: 1
+      batch_size: 256
+      eval_batch_size: 256
+      gate_leak: 0.7
+      max_passages: 5
+      question_len: 32
+      passage_len: 48
+      support_loss_weight: 1.0
+      gate_loss_weight: 0.0

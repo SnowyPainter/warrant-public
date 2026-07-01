@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.085063,
+  "dataset": "gdelt",
+  "effective_implementation": "XERTE",
+  "elapsed_sec": 14.278879,
+  "eval_loss": 6.297241,
+  "gate_mean": 0.755894,
+  "model": "xERTE",
+  "mrr": 0.141619,
+  "output_dir": "experiments/warrant_ablation/outputs/shuffled_gate/seed_37",
+  "primary_metric": 0.141619,
+  "seed": 37,
+  "status": "completed",
+  "train_loss": 5.352805,
+  "variant": "shuffled_gate",
+  "warrant_active_blocks": 2.0,
+  "warrant_logit_mean": 1.167717,
+  "warrant_replacements": 0.0,
+  "warrant_tail_mass_mean": 1.0
+}

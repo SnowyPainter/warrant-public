@@ -1,0 +1,18 @@
+{
+  "accuracy": 0.725053,
+  "auc": 0.80043,
+  "dataset": "lastfm",
+  "effective_implementation": "DyGFormer",
+  "elapsed_sec": 50.323466,
+  "eval_loss": 0.593569,
+  "model": "DyGFormer",
+  "output_dir": "experiments/edge_query_adapter_ablation/outputs/param_control/seed_17",
+  "primary_metric": 0.80043,
+  "seed": 17,
+  "status": "completed",
+  "train_loss": 0.42634,
+  "variant": "param_control",
+  "warrant_active_blocks": 0.0,
+  "warrant_logit_mean": 0.0,
+  "warrant_replacements": 0.0
+}

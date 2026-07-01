@@ -1,0 +1,18 @@
+{
+  "accuracy": 0.717806,
+  "auc": 0.790601,
+  "dataset": "lastfm",
+  "effective_implementation": "DyGFormer",
+  "elapsed_sec": 55.612029,
+  "eval_loss": 0.60069,
+  "model": "DyGFormer",
+  "output_dir": "experiments/edge_query_adapter_ablation/outputs/generic_qk_warrant/seed_7",
+  "primary_metric": 0.790601,
+  "seed": 7,
+  "status": "completed",
+  "train_loss": 0.449132,
+  "variant": "generic_qk_warrant",
+  "warrant_active_blocks": 3.0,
+  "warrant_logit_mean": 12.390078,
+  "warrant_replacements": 2.0
+}

@@ -1,0 +1,21 @@
+{
+  "accuracy": 0.514446,
+  "dataset": "retweets",
+  "domain": "mtpp",
+  "effective_implementation": "SAHP",
+  "elapsed_sec": 23.659,
+  "eval_loss": 194.31538,
+  "examples": 55201.0,
+  "implementation": "reference",
+  "mae_time": 20685.780814,
+  "mark_mrr": 0.74572,
+  "model": "SAHP",
+  "output_dir": "experiments/main_benchmark/outputs/SAHP/7/mtpp/retweets/warrant",
+  "primary_metric": 0.74572,
+  "seed": 7,
+  "status": "completed",
+  "train_loss": 194.817657,
+  "variant": "warrant",
+  "warrant_active_blocks": 1.0,
+  "warrant_replacements": 0.0
+}

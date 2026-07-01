@@ -1,0 +1,26 @@
+[
+  {
+    "variant": "post_attention_gate",
+    "input_visible_to_gate": "h = 0.5u + 0.5(-u) = 0",
+    "item_identity_available": false,
+    "attention_renormalized": false,
+    "expected_accuracy": 0.5,
+    "interpretation": "aggregate gate sees the same zero vector for both labels"
+  },
+  {
+    "variant": "attention_logit_gate",
+    "input_visible_to_gate": "softmax relevance logits",
+    "item_identity_available": true,
+    "attention_renormalized": true,
+    "expected_accuracy": 1.0,
+    "interpretation": "can separate items, but does so by redefining attention mass"
+  },
+  {
+    "variant": "warrant_value_term_gate",
+    "input_visible_to_gate": "query-item pair before value aggregation",
+    "item_identity_available": true,
+    "attention_renormalized": false,
+    "expected_accuracy": 1.0,
+    "interpretation": "keeps alpha fixed and changes item-wise weighted value contribution"
+  }
+]

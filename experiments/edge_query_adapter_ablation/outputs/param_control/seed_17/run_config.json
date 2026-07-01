@@ -1,0 +1,22 @@
+{
+  "spec": {
+    "dataset": "lastfm",
+    "dataset_path": "/workspace/warrant/data/processed/ctdg/lastfm/events.csv",
+    "domain": "ctdg",
+    "implementation": "reference",
+    "model": "DyGFormer",
+    "model_config": {
+      "edge_feat_dim": 1,
+      "hidden_dim": 128,
+      "num_layers": 2,
+      "num_nodes": "auto",
+      "time_dim": 32
+    },
+    "seed": 17,
+    "use_warrant": false,
+    "variant": "param_control"
+  },
+  "variant_description": {
+    "description": "Learned edge adapter with comparable parameters but no permission gate."
+  }
+}

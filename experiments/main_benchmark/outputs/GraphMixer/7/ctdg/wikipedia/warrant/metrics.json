@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.941295,
+  "auc": 0.98289,
+  "dataset": "wikipedia",
+  "domain": "ctdg",
+  "effective_implementation": "GraphMixer",
+  "elapsed_sec": 94.184,
+  "eval_loss": 0.374182,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "GraphMixer",
+  "output_dir": "experiments/main_benchmark/outputs/GraphMixer/7/ctdg/wikipedia/warrant",
+  "primary_metric": 0.98289,
+  "seed": 7,
+  "status": "completed",
+  "train_loss": 0.030432,
+  "variant": "warrant",
+  "warrant_active_blocks": 2.0,
+  "warrant_replacements": 0.0
+}

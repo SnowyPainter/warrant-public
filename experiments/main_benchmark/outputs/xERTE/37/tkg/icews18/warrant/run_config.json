@@ -1,0 +1,24 @@
+{
+  "dataset": "icews18",
+  "dataset_path": "data/processed/tkg/icews18/facts.csv",
+  "domain": "tkg",
+  "implementation": "reference",
+  "model": "xERTE",
+  "model_config": {
+    "expansion_layers": 2,
+    "hidden_dim": 128,
+    "num_entities": "auto",
+    "num_relations": "auto",
+    "time_dim": 32
+  },
+  "seed": 37,
+  "use_warrant": true,
+  "variant": "warrant",
+  "warrant": {
+    "aux_weight": 0.0,
+    "context_fields": [],
+    "context_schema": "none",
+    "gate_init": 0.95,
+    "gate_leak": 0.05
+  }
+}

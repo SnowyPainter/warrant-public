@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.09765,
+  "dataset": "icews18",
+  "domain": "tkg",
+  "effective_implementation": "CyGNet",
+  "elapsed_sec": 16.915,
+  "eval_loss": 7.154512,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "CyGNet",
+  "mrr": 0.152887,
+  "output_dir": "experiments/main_benchmark/outputs/CyGNet/7/tkg/icews18/base",
+  "primary_metric": 0.152887,
+  "seed": 7,
+  "status": "completed",
+  "train_loss": 5.857684,
+  "variant": "base",
+  "warrant_active_blocks": 0.0,
+  "warrant_replacements": 0.0
+}

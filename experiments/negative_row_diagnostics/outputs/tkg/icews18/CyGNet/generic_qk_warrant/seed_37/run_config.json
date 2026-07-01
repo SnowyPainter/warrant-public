@@ -1,0 +1,24 @@
+{
+  "spec": {
+    "dataset": "icews18",
+    "dataset_path": "/workspace/warrant/data/processed/tkg/icews18/facts.csv",
+    "domain": "tkg",
+    "implementation": "reference",
+    "model": "CyGNet",
+    "model_config": {
+      "gradient_clip": 0.5,
+      "hidden_dim": 128,
+      "learning_rate": 0.0005,
+      "num_entities": "auto",
+      "num_relations": "auto",
+      "time_dim": 32,
+      "warrant_learning_rate": 0.0003
+    },
+    "seed": 37,
+    "use_warrant": true,
+    "variant": "generic_qk_warrant"
+  },
+  "variant": {
+    "description": "Warrant is enabled only on generic query-key attention; the domain-localized metric path is disabled."
+  }
+}

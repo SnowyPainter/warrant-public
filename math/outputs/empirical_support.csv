@@ -1,0 +1,10 @@
+section,base_mrr,warrant_mrr,mrr_delta,mrr_deficit_reduction_pct,base_r1,warrant_r1,r1_error_reduction_pct,base_unsupported,warrant_unsupported,unsupported_reduction_pct,gold_random_attention_ratio,gold_random_effective_ratio,effective_ratio_gain,primary_metric,evidence_attention_mass,evidence_warrant_mass,non_evidence_warrant_mass,drop_zero_evidence,drop_zero_non_evidence,dataset,model,metric,direction,base,correct,direction_aware_gain,correct_minus_generic,correct_minus_shuffled
+bert_hotpotqa,0.9083,0.9141,0.005800000000000027,6.324972737186507,0.8314,0.8435,7.1767497034400956,0.2281,0.2215,2.8934677772906596,0.8663,3.8016,4.388318134595406,,,,,,,,,,,,,,,
+mass_ctdg,,,,,,,,,,,,,,0.8915583333333333,0.6086353333333333,0.6086333333333334,1.379055,0.057469,0.020295666666666667,,,,,,,,,
+mass_rag,,,,,,,,,,,,,,0.5527143333333333,0.257425,0.241861,0.6960343333333333,0.003018333333333333,-0.0033813333333333334,,,,,,,,,
+mass_tkg,,,,,,,,,,,,,,0.117285,0.084861,0.08154166666666667,0.8787366666666667,0.11622466666666667,-0.22454733333333332,,,,,,,,,
+path_ctdg,,,,,,,,,,,,,,,,,,,,lastfm,DyGFormer,auc,higher,0.7860486666666666,0.8979676666666666,0.11191899999999999,0.10764166666666664,0.26032166666666656
+path_mtpp,,,,,,,,,,,,,,,,,,,,retweets,AttNHP,mark_mrr,higher,0.755474,0.771019,0.015545000000000031,-0.0002710000000000212,0.017437000000000036
+path_rag,,,,,,,,,,,,,,,,,,,,hotpotqa,FiD,support_mrr,higher,0.557562,0.559334,0.0017719999999999958,0.001302999999999943,0.00026599999999998847
+path_stpp,,,,,,,,,,,,,,,,,,,,earthquake,DeepSTPP,rmse_location,lower,2.251913,2.23224,0.01967300000000005,-0.0069710000000000605,0.13161500000000004
+path_tkg,,,,,,,,,,,,,,,,,,,,gdelt,xERTE,mrr,higher,0.048807,0.11752,0.068713,0.068329,0.003160999999999997

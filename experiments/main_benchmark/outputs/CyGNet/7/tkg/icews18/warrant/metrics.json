@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.0991,
+  "dataset": "icews18",
+  "domain": "tkg",
+  "effective_implementation": "CyGNet",
+  "elapsed_sec": 15.753,
+  "eval_loss": 7.164188,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "CyGNet",
+  "mrr": 0.153556,
+  "output_dir": "experiments/main_benchmark/outputs/CyGNet/7/tkg/icews18/warrant",
+  "primary_metric": 0.153556,
+  "seed": 7,
+  "status": "completed",
+  "train_loss": 5.860724,
+  "variant": "warrant",
+  "warrant_active_blocks": 1.0,
+  "warrant_replacements": 0.0
+}

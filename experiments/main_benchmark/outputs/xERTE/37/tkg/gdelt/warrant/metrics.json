@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.087046,
+  "dataset": "gdelt",
+  "domain": "tkg",
+  "effective_implementation": "XERTE",
+  "elapsed_sec": 263.349,
+  "eval_loss": 6.276517,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "xERTE",
+  "mrr": 0.14196,
+  "output_dir": "experiments/main_benchmark/outputs/xERTE/37/tkg/gdelt/warrant",
+  "primary_metric": 0.14196,
+  "seed": 37,
+  "status": "completed",
+  "train_loss": 5.35281,
+  "variant": "warrant",
+  "warrant_active_blocks": 2.0,
+  "warrant_replacements": 0.0
+}

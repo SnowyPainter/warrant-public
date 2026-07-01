@@ -1,0 +1,21 @@
+{
+  "accuracy": 0.553754,
+  "dataset": "retweets",
+  "domain": "mtpp",
+  "effective_implementation": "AttNHP",
+  "elapsed_sec": 25.515,
+  "eval_loss": 193.827207,
+  "examples": 55201.0,
+  "implementation": "reference",
+  "mae_time": 20628.231169,
+  "mark_mrr": 0.765993,
+  "model": "AttNHP",
+  "output_dir": "experiments/main_benchmark/outputs/AttNHP/37/mtpp/retweets/base",
+  "primary_metric": 0.765993,
+  "seed": 37,
+  "status": "completed",
+  "train_loss": 195.799663,
+  "variant": "base",
+  "warrant_active_blocks": 0.0,
+  "warrant_replacements": 0.0
+}

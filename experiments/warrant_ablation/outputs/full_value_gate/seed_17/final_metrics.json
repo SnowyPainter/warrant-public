@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.090174,
+  "dataset": "gdelt",
+  "effective_implementation": "XERTE",
+  "elapsed_sec": 14.650627,
+  "eval_loss": 6.246736,
+  "gate_mean": 0.631633,
+  "model": "xERTE",
+  "mrr": 0.1436,
+  "output_dir": "experiments/warrant_ablation/outputs/full_value_gate/seed_17",
+  "primary_metric": 0.1436,
+  "seed": 17,
+  "status": "completed",
+  "train_loss": 5.319025,
+  "variant": "full_value_gate",
+  "warrant_active_blocks": 2.0,
+  "warrant_logit_mean": -1.37441,
+  "warrant_replacements": 0.0,
+  "warrant_tail_mass_mean": 1.0
+}

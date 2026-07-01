@@ -1,0 +1,6 @@
+{
+  "path_variant": "shuffled_pairing",
+  "source": "experiments/edge_query_adapter_ablation",
+  "source_output_dir": "experiments/edge_query_adapter_ablation/outputs/shuffled_edge_query/seed_7",
+  "source_variant": "shuffled_edge_query"
+}

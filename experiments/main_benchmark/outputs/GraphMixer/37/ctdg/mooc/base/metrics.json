@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.928937,
+  "auc": 0.976938,
+  "dataset": "mooc",
+  "domain": "ctdg",
+  "effective_implementation": "GraphMixer",
+  "elapsed_sec": 55.745,
+  "eval_loss": 0.199512,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "GraphMixer",
+  "output_dir": "experiments/main_benchmark/outputs/GraphMixer/37/ctdg/mooc/base",
+  "primary_metric": 0.976938,
+  "seed": 37,
+  "status": "completed",
+  "train_loss": 0.13603,
+  "variant": "base",
+  "warrant_active_blocks": 0.0,
+  "warrant_replacements": 0.0
+}

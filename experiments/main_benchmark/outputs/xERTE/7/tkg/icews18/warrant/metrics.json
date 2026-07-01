@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.101312,
+  "dataset": "icews18",
+  "domain": "tkg",
+  "effective_implementation": "XERTE",
+  "elapsed_sec": 26.508,
+  "eval_loss": 7.420991,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "xERTE",
+  "mrr": 0.156099,
+  "output_dir": "experiments/main_benchmark/outputs/xERTE/7/tkg/icews18/warrant",
+  "primary_metric": 0.156099,
+  "seed": 7,
+  "status": "completed",
+  "train_loss": 5.159664,
+  "variant": "warrant",
+  "warrant_active_blocks": 2.0,
+  "warrant_replacements": 0.0
+}

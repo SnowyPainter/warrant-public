@@ -1,0 +1,8 @@
+domain,dataset,model,seed,metric,correct_path_gain_vs_base,open_path_gain_vs_base,correct_minus_open_path,correct_minus_generic,correct_minus_shuffled,supports_path_localization
+ctdg,lastfm,DyGFormer,7,auc,0.10987399999999992,nan,nan,0.10675199999999996,0.2587999999999999,True
+ctdg,lastfm,DyGFormer,17,auc,0.11073600000000006,nan,nan,0.10505900000000001,0.25740700000000005,True
+ctdg,lastfm,DyGFormer,37,auc,0.115147,nan,nan,0.11111399999999994,0.26475799999999994,True
+mtpp,retweets,AttNHP,7,mark_mrr,0.015545000000000031,nan,nan,-0.0002710000000000212,0.017437000000000036,False
+rag,hotpotqa,FiD,7,support_mrr,0.0017719999999999958,nan,nan,0.001302999999999943,0.00026599999999998847,True
+stpp,earthquake,DeepSTPP,7,rmse_location,0.01967300000000005,nan,nan,-0.0069710000000000605,0.13161500000000004,False
+tkg,gdelt,xERTE,7,mrr,0.068713,0.06768199999999999,0.0010310000000000041,0.068329,0.003160999999999997,True

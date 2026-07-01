@@ -1,0 +1,64 @@
+{
+  "dataset": "hotpotqa",
+  "model": "FiD",
+  "row": 7122,
+  "question": "In what year was the actress who is starred as Baron Frankenstein's new creation in \"Frankenstein Created Woman\" born?",
+  "answers": [
+    "1944"
+  ],
+  "rank_of_first_support": 1,
+  "support_attention_ratio": 0.3958907723426819,
+  "support_mass_ratio": 0.45864513516426086,
+  "passages": [
+    {
+      "index": 1,
+      "title": "Frankenstein Created Woman",
+      "is_support": true,
+      "attention": 0.1975906491279602,
+      "permission": 0.9622296690940857,
+      "effective_mass": 0.19012758135795593,
+      "support_logit": 0.733443558216095,
+      "snippet": "Frankenstein Created Woman Frankenstein Created Woman is a 1967 British Hammer Horror film directed by Terence Fisher.  It stars Peter Cushing as Baron Frankenstein and Susan Denberg as his new creation.  It is the fourth film in Hammer's Frankenstein series."
+    },
+    {
+      "index": 2,
+      "title": "Earl of Essex",
+      "is_support": false,
+      "attention": 0.2139396369457245,
+      "permission": 0.7950688600540161,
+      "effective_mass": 0.1700967401266098,
+      "support_logit": -0.840266764163971,
+      "snippet": "Earl of Essex Earl of Essex is a title in the Peerage of England which was first created in the 12th century by King Stephen of England.  The title has been recreated eight times from its original inception, beginning with a new first Earl upon each new creation.  Possibly the most well-known Earls of Essex were Thomas Cromwell (c. 1485 – 1540) (sixth creati"
+    },
+    {
+      "index": 3,
+      "title": "Susan Denberg",
+      "is_support": true,
+      "attention": 0.19830016791820526,
+      "permission": 0.9628502130508423,
+      "effective_mass": 0.19093336164951324,
+      "support_logit": 0.853651762008667,
+      "snippet": "Susan Denberg Susan Denberg (born Dietlinde Zechner; 2 August 1944, Bad Polzin, Germany) is a German-Austrian model and actress."
+    },
+    {
+      "index": 4,
+      "title": "Hugh de Courtenay, 4th/12th Earl of Devon",
+      "is_support": false,
+      "attention": 0.16430924832820892,
+      "permission": 0.7123363614082336,
+      "effective_mass": 0.11704345047473907,
+      "support_logit": -0.4405367970466614,
+      "snippet": "Hugh de Courtenay, 4th/12th Earl of Devon Hugh Courtenay, 4th/12th Earl of Devon, 5th Baron Courtenay (1389 – 16 June 1422) was an English nobleman, son of the 3rd/11th Earl of Devon, and father of the 5th/13th Earl.  The ordinal number given to the early Courtenay Earls of Devon depends on whether the earldom is deemed a new creation by the letters patent g"
+    },
+    {
+      "index": 5,
+      "title": "Hugh de Courtenay, 2nd/10th Earl of Devon",
+      "is_support": false,
+      "attention": 0.2258603721857071,
+      "permission": 0.7200884222984314,
+      "effective_mass": 0.16263943910598755,
+      "support_logit": -1.3310682773590088,
+      "snippet": "Hugh de Courtenay, 2nd/10th Earl of Devon Sir Hugh de Courtenay, 2nd/10th Earl of Devon (12 July 1303 – 2 May 1377), 2nd Baron Courtenay, feudal baron of Okehampton and feudal baron of Plympton, played an important role in the Hundred Years War in the service of King Edward III.  His chief seats were Tiverton Castle and Okehampton Castle in Devon.  The ordin"
+    }
+  ]
+}

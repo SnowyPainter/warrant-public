@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.078044,
+  "dataset": "gdelt",
+  "domain": "tkg",
+  "effective_implementation": "XERTE",
+  "elapsed_sec": 260.106,
+  "eval_loss": 6.475782,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "xERTE",
+  "mrr": 0.126332,
+  "output_dir": "experiments/main_benchmark/outputs/xERTE/17/tkg/gdelt/base",
+  "primary_metric": 0.126332,
+  "seed": 17,
+  "status": "completed",
+  "train_loss": 5.36707,
+  "variant": "base",
+  "warrant_active_blocks": 0.0,
+  "warrant_replacements": 0.0
+}

@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.881332,
+  "auc": 0.944565,
+  "dataset": "wikipedia",
+  "domain": "ctdg",
+  "effective_implementation": "TGAT",
+  "elapsed_sec": 59.847,
+  "eval_loss": 0.719057,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "TGAT",
+  "output_dir": "experiments/main_benchmark/outputs/TGAT/7/ctdg/wikipedia/base",
+  "primary_metric": 0.944565,
+  "seed": 7,
+  "status": "completed",
+  "train_loss": 0.037035,
+  "variant": "base",
+  "warrant_active_blocks": 0.0,
+  "warrant_replacements": 0.0
+}

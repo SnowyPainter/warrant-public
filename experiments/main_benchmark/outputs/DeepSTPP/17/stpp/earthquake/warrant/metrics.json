@@ -1,0 +1,21 @@
+{
+  "dataset": "earthquake",
+  "domain": "stpp",
+  "effective_implementation": "DeepSTPP",
+  "elapsed_sec": 31.293,
+  "eval_loss": 3.759435,
+  "examples": 65532.0,
+  "implementation": "reference",
+  "joint_nll": 3.759435,
+  "mae_time": 0.334689,
+  "model": "DeepSTPP",
+  "output_dir": "experiments/main_benchmark/outputs/DeepSTPP/17/stpp/earthquake/warrant",
+  "primary_metric": 1.15603,
+  "rmse_location": 1.15603,
+  "seed": 17,
+  "status": "completed",
+  "train_loss": 3.534857,
+  "variant": "warrant",
+  "warrant_active_blocks": 1.0,
+  "warrant_replacements": 0.0
+}

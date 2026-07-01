@@ -1,0 +1,21 @@
+{
+  "accuracy": 0.404302,
+  "dataset": "stackoverflow",
+  "domain": "mtpp",
+  "effective_implementation": "AttNHP",
+  "elapsed_sec": 24.69,
+  "eval_loss": 1.805813,
+  "examples": 64160.0,
+  "implementation": "reference",
+  "mae_time": 0.584954,
+  "mark_mrr": 0.604421,
+  "model": "AttNHP",
+  "output_dir": "experiments/main_benchmark/outputs/AttNHP/17/mtpp/stackoverflow/base",
+  "primary_metric": 0.604421,
+  "seed": 17,
+  "status": "completed",
+  "train_loss": 1.638698,
+  "variant": "base",
+  "warrant_active_blocks": 0.0,
+  "warrant_replacements": 0.0
+}

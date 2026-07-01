@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.137855,
+  "dataset": "icews14",
+  "domain": "tkg",
+  "effective_implementation": "RENET",
+  "elapsed_sec": 260.874,
+  "eval_loss": 5.858769,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "RE-NET",
+  "mrr": 0.214559,
+  "output_dir": "experiments/main_benchmark/outputs/RE-NET/17/tkg/icews14/warrant",
+  "primary_metric": 0.214559,
+  "seed": 17,
+  "status": "completed",
+  "train_loss": 4.889997,
+  "variant": "warrant",
+  "warrant_active_blocks": 1.0,
+  "warrant_replacements": 0.0
+}

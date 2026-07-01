@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.781584,
+  "auc": 0.864194,
+  "dataset": "lastfm",
+  "domain": "ctdg",
+  "effective_implementation": "TGAT",
+  "elapsed_sec": 41.842,
+  "eval_loss": 0.618291,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "TGAT",
+  "output_dir": "experiments/main_benchmark/outputs/TGAT/17/ctdg/lastfm/base",
+  "primary_metric": 0.864194,
+  "seed": 17,
+  "status": "completed",
+  "train_loss": 0.256831,
+  "variant": "base",
+  "warrant_active_blocks": 0.0,
+  "warrant_replacements": 0.0
+}

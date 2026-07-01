@@ -1,0 +1,21 @@
+{
+  "spec": {
+    "dataset": "retweets",
+    "dataset_path": "/workspace/warrant/data/processed/mtpp/retweets/events.csv",
+    "domain": "mtpp",
+    "implementation": "reference",
+    "model": "AttNHP",
+    "model_config": {
+      "hidden_dim": 128,
+      "num_event_types": "auto",
+      "num_heads": 4,
+      "time_dim": 32
+    },
+    "seed": 37,
+    "use_warrant": true,
+    "variant": "open_path_no_gate"
+  },
+  "variant": {
+    "description": "The localized metric-facing contribution path is opened with g=1 and no learned permission gate."
+  }
+}

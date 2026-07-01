@@ -1,0 +1,23 @@
+{
+  "accuracy": NaN,
+  "dataset": "earthquake",
+  "domain": "stpp",
+  "effective_implementation": "TransformerSTPP",
+  "elapsed_sec": 1.284,
+  "epoch": 10,
+  "eval_loss": 5.5364532470703125,
+  "gate_mean": 0.9999999403953552,
+  "joint_nll": 5.5364532470703125,
+  "mae_time": 0.24248808549582884,
+  "model": "Transformer-STPP",
+  "primary_metric": 1.4960963091129602,
+  "rmse_location": 1.4960963091129602,
+  "seed": 7,
+  "train_gate_mean": 1.0,
+  "train_loss": 4.420928716659546,
+  "train_warrant_logit_mean": 0.0,
+  "variant": "base",
+  "warrant_active_blocks": 0.0,
+  "warrant_logit_mean": 0.0,
+  "warrant_replacements": 0.0
+}

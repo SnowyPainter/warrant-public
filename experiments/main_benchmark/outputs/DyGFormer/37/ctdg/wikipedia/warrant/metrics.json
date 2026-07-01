@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.941143,
+  "auc": 0.984043,
+  "dataset": "wikipedia",
+  "domain": "ctdg",
+  "effective_implementation": "DyGFormer",
+  "elapsed_sec": 129.706,
+  "eval_loss": 0.320472,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "DyGFormer",
+  "output_dir": "experiments/main_benchmark/outputs/DyGFormer/37/ctdg/wikipedia/warrant",
+  "primary_metric": 0.984043,
+  "seed": 37,
+  "status": "completed",
+  "train_loss": 0.034861,
+  "variant": "warrant",
+  "warrant_active_blocks": 4.0,
+  "warrant_replacements": 2.0
+}

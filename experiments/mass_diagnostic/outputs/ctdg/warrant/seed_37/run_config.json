@@ -1,0 +1,112 @@
+{
+  "config": {
+    "datasets": {
+      "ctdg": {
+        "name": "lastfm",
+        "path": "data/processed/ctdg/lastfm/events.csv"
+      },
+      "rag": {
+        "name": "hotpotqa",
+        "path": "data/processed/rag/hotpotqa/examples.jsonl"
+      },
+      "tkg": {
+        "name": "gdelt",
+        "path": "data/processed/tkg/gdelt/facts.csv"
+      }
+    },
+    "experiment": {
+      "device": "cuda:0",
+      "domains": [
+        "ctdg",
+        "rag",
+        "tkg"
+      ],
+      "name": "mass_diagnostic",
+      "output_root": "experiments/mass_diagnostic/outputs",
+      "seeds": [
+        7,
+        17,
+        37
+      ],
+      "skip_completed": true,
+      "variants": [
+        "base",
+        "warrant"
+      ]
+    },
+    "models": {
+      "ctdg": {
+        "config": {
+          "edge_feat_dim": 1,
+          "hidden_dim": 128,
+          "num_layers": 2,
+          "num_nodes": "auto",
+          "time_dim": 32
+        },
+        "name": "DyGFormer"
+      },
+      "rag": {
+        "config": {
+          "batch_size": 512,
+          "eval_batch_size": 512,
+          "fusion_layers": 1,
+          "gate_leak": 0.7,
+          "gate_loss_weight": 0.0,
+          "hidden_dim": 96,
+          "max_passages": 5,
+          "passage_len": 48,
+          "question_len": 32,
+          "support_loss_weight": 1.0,
+          "vocab_size": 32128
+        },
+        "name": "FiD"
+      },
+      "tkg": {
+        "config": {
+          "expansion_layers": 2,
+          "hidden_dim": 128,
+          "num_entities": "auto",
+          "num_relations": "auto",
+          "time_dim": 32
+        },
+        "name": "xERTE"
+      }
+    },
+    "tkg": {
+      "strict_time_history": false
+    },
+    "training": {
+      "batch_size": 1024,
+      "dropout": 0.1,
+      "epochs": 10,
+      "eval_ratio": 0.2,
+      "history_len": 50,
+      "implementation": "reference",
+      "learning_rate": 0.001,
+      "max_examples": 8192,
+      "progress": true,
+      "weight_decay": 0.0
+    },
+    "warrant": {
+      "gate_init": 0.95,
+      "gate_leak": 0.05
+    }
+  },
+  "spec": {
+    "dataset": "lastfm",
+    "dataset_path": "/workspace/warrant/data/processed/ctdg/lastfm/events.csv",
+    "domain": "ctdg",
+    "implementation": "reference",
+    "model": "DyGFormer",
+    "model_config": {
+      "edge_feat_dim": 1,
+      "hidden_dim": 128,
+      "num_layers": 2,
+      "num_nodes": "auto",
+      "time_dim": 32
+    },
+    "seed": 37,
+    "use_warrant": true,
+    "variant": "warrant"
+  }
+}

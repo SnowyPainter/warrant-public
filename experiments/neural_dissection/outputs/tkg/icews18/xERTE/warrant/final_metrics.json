@@ -1,0 +1,23 @@
+{
+  "accuracy": 0.03965832824893228,
+  "dataset": "icews18",
+  "domain": "tkg",
+  "effective_implementation": "XERTE",
+  "elapsed_sec": 0.656,
+  "epoch": 10,
+  "eval_loss": 10.094073295593262,
+  "gate_mean": 0.9652963876724243,
+  "model": "xERTE",
+  "mrr": 0.07333114425807645,
+  "primary_metric": 0.07333114425807645,
+  "seed": 7,
+  "train_gate_mean": 0.9644758105278015,
+  "train_loss": 9.918687582015991,
+  "train_warrant_logit_mean": 4.3122241497039795,
+  "train_warrant_tail_mass_mean": 0.9998779296875,
+  "variant": "warrant",
+  "warrant_active_blocks": 2.0,
+  "warrant_logit_mean": 4.233778953552246,
+  "warrant_replacements": 0.0,
+  "warrant_tail_mass_mean": 0.9999999403953552
+}

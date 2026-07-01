@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.747254,
+  "auc": 0.821793,
+  "dataset": "lastfm",
+  "edge_warrant_attention_entropy": 0.0,
+  "edge_warrant_gate_mean": 0.06337,
+  "effective_implementation": "DyGFormer",
+  "elapsed_sec": 50.524957,
+  "eval_loss": 0.533639,
+  "model": "DyGFormer",
+  "output_dir": "experiments/edge_query_adapter_ablation/outputs/handcrafted_only_control/seed_37",
+  "primary_metric": 0.821793,
+  "seed": 37,
+  "status": "completed",
+  "train_loss": 0.452626,
+  "variant": "handcrafted_only_control",
+  "warrant_active_blocks": 0.0,
+  "warrant_logit_mean": 0.0,
+  "warrant_replacements": 0.0
+}

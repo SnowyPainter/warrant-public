@@ -1,0 +1,21 @@
+{
+  "spec": {
+    "dataset": "earthquake",
+    "dataset_path": "/workspace/warrant/data/processed/stpp/earthquake/events.csv",
+    "domain": "stpp",
+    "implementation": "reference",
+    "model": "DeepSTPP",
+    "model_config": {
+      "hidden_dim": 128,
+      "num_layers": 2,
+      "num_marks": "auto",
+      "time_dim": 32
+    },
+    "seed": 37,
+    "use_warrant": true,
+    "variant": "open_path_no_gate"
+  },
+  "variant": {
+    "description": "The localized metric-facing contribution path is opened with g=1 and no learned permission gate."
+  }
+}

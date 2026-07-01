@@ -1,0 +1,6 @@
+domain,dataset,model,variant,warrant_tail_mass_mean,support_attention_mass,distractor_attention_mass,support_attention_ratio,support_warrant_mass,distractor_warrant_mass,support_mass_ratio,ratio_gain_warrant_minus_attention,edge_warrant_gate_mean,edge_warrant_attention_entropy
+tkg,icews18,xERTE,warrant,0.9999999403953552,,,,,,,,,
+rag,hotpotqa,LED,warrant,,0.2589079804724993,0.7410920213504862,0.2589079800587147,0.2239195954272933,0.6344987928329504,0.2609308782058277,0.002022898147113039,,
+rag,hotpotqa,LED,base,,0.2593054078106825,0.7406945914965272,0.2593054081452339,0.2593054078106825,0.7406945914965272,0.2593054081452339,0.0,,
+tkg,icews18,xERTE,base,0.0,,,,,,,,,
+ctdg,lastfm,DyGFormer,warrant,,,,,,,,,0.9999745190143584,2.52188491821289

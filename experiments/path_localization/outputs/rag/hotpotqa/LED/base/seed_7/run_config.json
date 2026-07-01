@@ -1,0 +1,26 @@
+{
+  "spec": {
+    "dataset": "hotpotqa",
+    "dataset_path": "/workspace/warrant/data/processed/rag/hotpotqa/examples.jsonl",
+    "domain": "rag",
+    "implementation": "reference",
+    "model": "LED",
+    "model_config": {
+      "batch_size": 128,
+      "encoder_layers": 1,
+      "eval_batch_size": 128,
+      "gate_leak": 0.05,
+      "hidden_dim": 96,
+      "max_passages": 5,
+      "passage_len": 48,
+      "question_len": 32,
+      "vocab_size": 50265
+    },
+    "seed": 7,
+    "use_warrant": false,
+    "variant": "base"
+  },
+  "variant": {
+    "description": "No Warrant on the metric-defining weighted value path."
+  }
+}

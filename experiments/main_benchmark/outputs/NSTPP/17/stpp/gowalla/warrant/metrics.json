@@ -1,0 +1,22 @@
+{
+  "accuracy": 0.0046,
+  "dataset": "gowalla",
+  "domain": "stpp",
+  "effective_implementation": "NSTPP",
+  "elapsed_sec": 52.766,
+  "eval_loss": 27.885798,
+  "examples": 50005.0,
+  "implementation": "reference",
+  "joint_nll": 27.885798,
+  "mae_time": 0.554353,
+  "model": "NSTPP",
+  "output_dir": "experiments/main_benchmark/outputs/NSTPP/17/stpp/gowalla/warrant",
+  "primary_metric": 0.0465,
+  "rmse_location": 0.0465,
+  "seed": 17,
+  "status": "completed",
+  "train_loss": 1.914745,
+  "variant": "warrant",
+  "warrant_active_blocks": 1.0,
+  "warrant_replacements": 0.0
+}

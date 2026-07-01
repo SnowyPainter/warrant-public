@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.143271,
+  "dataset": "icews14",
+  "domain": "tkg",
+  "effective_implementation": "XERTE",
+  "elapsed_sec": 257.339,
+  "eval_loss": 6.025425,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "xERTE",
+  "mrr": 0.212341,
+  "output_dir": "experiments/main_benchmark/outputs/xERTE/7/tkg/icews14/base",
+  "primary_metric": 0.212341,
+  "seed": 7,
+  "status": "completed",
+  "train_loss": 4.729095,
+  "variant": "base",
+  "warrant_active_blocks": 0.0,
+  "warrant_replacements": 0.0
+}

@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.091776,
+  "dataset": "gdelt",
+  "domain": "tkg",
+  "effective_implementation": "CyGNet",
+  "elapsed_sec": 260.194,
+  "eval_loss": 6.207152,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "CyGNet",
+  "mrr": 0.148446,
+  "output_dir": "experiments/main_benchmark/outputs/CyGNet/7/tkg/gdelt/base",
+  "primary_metric": 0.148446,
+  "seed": 7,
+  "status": "completed",
+  "train_loss": 5.265731,
+  "variant": "base",
+  "warrant_active_blocks": 0.0,
+  "warrant_replacements": 0.0
+}

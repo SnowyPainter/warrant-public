@@ -1,0 +1,21 @@
+{
+  "dataset": "earthquake",
+  "domain": "stpp",
+  "effective_implementation": "TransformerSTPP",
+  "elapsed_sec": 27.901,
+  "eval_loss": 3.807392,
+  "examples": 65532.0,
+  "implementation": "reference",
+  "joint_nll": 3.807392,
+  "mae_time": 0.325689,
+  "model": "Transformer-STPP",
+  "output_dir": "experiments/main_benchmark/outputs/Transformer-STPP/17/stpp/earthquake/base",
+  "primary_metric": 1.213857,
+  "rmse_location": 1.213857,
+  "seed": 17,
+  "status": "completed",
+  "train_loss": 3.531264,
+  "variant": "base",
+  "warrant_active_blocks": 0.0,
+  "warrant_replacements": 0.0
+}

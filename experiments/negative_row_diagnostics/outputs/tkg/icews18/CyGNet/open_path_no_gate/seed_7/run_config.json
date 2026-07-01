@@ -1,0 +1,24 @@
+{
+  "spec": {
+    "dataset": "icews18",
+    "dataset_path": "/workspace/warrant/data/processed/tkg/icews18/facts.csv",
+    "domain": "tkg",
+    "implementation": "reference",
+    "model": "CyGNet",
+    "model_config": {
+      "gradient_clip": 0.5,
+      "hidden_dim": 128,
+      "learning_rate": 0.0005,
+      "num_entities": "auto",
+      "num_relations": "auto",
+      "time_dim": 32,
+      "warrant_learning_rate": 0.0003
+    },
+    "seed": 7,
+    "use_warrant": true,
+    "variant": "open_path_no_gate"
+  },
+  "variant": {
+    "description": "The localized metric-facing contribution path is opened with g=1 and no learned permission gate."
+  }
+}

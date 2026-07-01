@@ -1,0 +1,21 @@
+{
+  "dataset": "earthquake",
+  "domain": "stpp",
+  "effective_implementation": "NSTPP",
+  "elapsed_sec": 31.059,
+  "eval_loss": 3.710504,
+  "examples": 65532.0,
+  "implementation": "reference",
+  "joint_nll": 3.710504,
+  "mae_time": 0.306381,
+  "model": "NSTPP",
+  "output_dir": "experiments/main_benchmark/outputs/NSTPP/17/stpp/earthquake/base",
+  "primary_metric": 1.088287,
+  "rmse_location": 1.088287,
+  "seed": 17,
+  "status": "completed",
+  "train_loss": 3.433386,
+  "variant": "base",
+  "warrant_active_blocks": 0.0,
+  "warrant_replacements": 0.0
+}

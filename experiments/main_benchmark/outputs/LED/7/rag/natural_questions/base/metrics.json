@@ -1,0 +1,19 @@
+{
+  "accuracy": 0.001449,
+  "dataset": "natural_questions",
+  "domain": "rag",
+  "effective_implementation": "LED",
+  "elapsed_sec": 43.94,
+  "eval_loss": 10.774137,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "LED",
+  "output_dir": "experiments/main_benchmark/outputs/LED/7/rag/natural_questions/base",
+  "primary_metric": 0.001449,
+  "seed": 7,
+  "status": "completed",
+  "train_loss": 10.742435,
+  "variant": "base",
+  "warrant_active_blocks": 0.0,
+  "warrant_replacements": 0.0
+}

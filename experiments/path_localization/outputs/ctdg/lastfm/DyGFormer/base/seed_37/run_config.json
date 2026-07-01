@@ -1,0 +1,6 @@
+{
+  "path_variant": "base",
+  "source": "experiments/edge_query_adapter_ablation",
+  "source_output_dir": "experiments/edge_query_adapter_ablation/outputs/base/seed_37",
+  "source_variant": "base"
+}

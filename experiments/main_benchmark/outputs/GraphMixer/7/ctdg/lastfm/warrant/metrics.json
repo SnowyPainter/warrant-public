@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.840784,
+  "auc": 0.913986,
+  "dataset": "lastfm",
+  "domain": "ctdg",
+  "effective_implementation": "GraphMixer",
+  "elapsed_sec": 77.53,
+  "eval_loss": 0.502913,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "GraphMixer",
+  "output_dir": "experiments/main_benchmark/outputs/GraphMixer/7/ctdg/lastfm/warrant",
+  "primary_metric": 0.913986,
+  "seed": 7,
+  "status": "completed",
+  "train_loss": 0.207094,
+  "variant": "warrant",
+  "warrant_active_blocks": 2.0,
+  "warrant_replacements": 0.0
+}

@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.926038,
+  "auc": 0.977337,
+  "dataset": "mooc",
+  "domain": "ctdg",
+  "effective_implementation": "DyGFormer",
+  "elapsed_sec": 111.997,
+  "eval_loss": 0.220637,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "DyGFormer",
+  "output_dir": "experiments/main_benchmark/outputs/DyGFormer/37/ctdg/mooc/warrant",
+  "primary_metric": 0.977337,
+  "seed": 37,
+  "status": "completed",
+  "train_loss": 0.121088,
+  "variant": "warrant",
+  "warrant_active_blocks": 4.0,
+  "warrant_replacements": 2.0
+}

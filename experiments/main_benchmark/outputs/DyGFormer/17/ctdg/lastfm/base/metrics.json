@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.754348,
+  "auc": 0.850313,
+  "dataset": "lastfm",
+  "domain": "ctdg",
+  "effective_implementation": "DyGFormer",
+  "elapsed_sec": 56.386,
+  "eval_loss": 0.729153,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "DyGFormer",
+  "output_dir": "experiments/main_benchmark/outputs/DyGFormer/17/ctdg/lastfm/base",
+  "primary_metric": 0.850313,
+  "seed": 17,
+  "status": "completed",
+  "train_loss": 0.214704,
+  "variant": "base",
+  "warrant_active_blocks": 0.0,
+  "warrant_replacements": 0.0
+}

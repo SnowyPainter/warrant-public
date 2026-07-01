@@ -1,0 +1,22 @@
+{
+  "accuracy": 0.5670103092783505,
+  "dataset": "retweets",
+  "domain": "mtpp",
+  "effective_implementation": "AttNHP",
+  "elapsed_sec": 0.89,
+  "epoch": 10,
+  "eval_loss": 24.84061622619629,
+  "gate_mean": 1.0,
+  "mae_time": 2399.2135557880106,
+  "mark_mrr": 0.7726804130163389,
+  "model": "AttNHP",
+  "primary_metric": 0.7726804130163389,
+  "seed": 7,
+  "train_gate_mean": 1.0,
+  "train_loss": 84.48614883422852,
+  "train_warrant_logit_mean": 0.0,
+  "variant": "base",
+  "warrant_active_blocks": 0.0,
+  "warrant_logit_mean": 0.0,
+  "warrant_replacements": 0.0
+}

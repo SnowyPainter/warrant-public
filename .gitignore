@@ -1,0 +1,8 @@
+__pycache__/
+data/
+external/
+# experiment outputs / checkpoints
+*.pt
+*.pth
+*.ckpt
+*.safetensors

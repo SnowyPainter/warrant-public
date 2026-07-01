@@ -1,0 +1,50 @@
+experiment:
+  name: edge_query_adapter_ablation
+  seeds: [7, 17, 37]
+  device: cuda:0
+  output_root: experiments/edge_query_adapter_ablation/outputs
+  skip_completed: true
+
+training:
+  implementation: reference
+  progress: true
+  max_examples: 32768
+  epochs: 10
+  batch_size: 2048
+  learning_rate: 0.001
+  weight_decay: 0.0
+  history_len: 50
+  eval_ratio: 0.2
+  dropout: 0.1
+
+warrant:
+  gate_init: 0.95
+  gate_leak: 0.05
+
+dataset:
+  domain: ctdg
+  name: lastfm
+  path: data/processed/ctdg/lastfm/events.csv
+
+model:
+  name: DyGFormer
+  config:
+    num_nodes: auto
+    edge_feat_dim: 1
+    hidden_dim: 128
+    time_dim: 32
+    num_layers: 2
+
+variants:
+  base:
+    description: Original CTDG link prediction model without Warrant.
+  generic_qk_warrant:
+    description: Generic query-key Warrant inside temporal attention, without edge-query adapter.
+  edge_conditioned_warrant:
+    description: Edge-query adapter plus Warrant over source/destination history terms.
+  handcrafted_only_control:
+    description: Fixed heuristic gate from raw history recency/counterpart statistics.
+  param_control:
+    description: Learned edge adapter with comparable parameters but no permission gate.
+  shuffled_edge_query:
+    description: Edge-conditioned Warrant with mismatched edge query and history items.

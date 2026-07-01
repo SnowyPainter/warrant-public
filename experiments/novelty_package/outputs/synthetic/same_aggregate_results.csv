@@ -1,0 +1,4 @@
+variant,input_visible_to_gate,item_identity_available,attention_renormalized,expected_accuracy,interpretation
+post_attention_gate,h = 0.5u + 0.5(-u) = 0,False,False,0.5,aggregate gate sees the same zero vector for both labels
+attention_logit_gate,softmax relevance logits,True,True,1.0,"can separate items, but does so by redefining attention mass"
+warrant_value_term_gate,query-item pair before value aggregation,True,False,1.0,keeps alpha fixed and changes item-wise weighted value contribution

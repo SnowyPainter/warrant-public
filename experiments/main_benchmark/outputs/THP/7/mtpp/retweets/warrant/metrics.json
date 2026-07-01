@@ -1,0 +1,21 @@
+{
+  "accuracy": 0.51037,
+  "dataset": "retweets",
+  "domain": "mtpp",
+  "effective_implementation": "THP",
+  "elapsed_sec": 23.545,
+  "eval_loss": 194.112815,
+  "examples": 55201.0,
+  "implementation": "reference",
+  "mae_time": 20678.289935,
+  "mark_mrr": 0.743668,
+  "model": "THP",
+  "output_dir": "experiments/main_benchmark/outputs/THP/7/mtpp/retweets/warrant",
+  "primary_metric": 0.743668,
+  "seed": 7,
+  "status": "completed",
+  "train_loss": 194.977306,
+  "variant": "warrant",
+  "warrant_active_blocks": 1.0,
+  "warrant_replacements": 0.0
+}

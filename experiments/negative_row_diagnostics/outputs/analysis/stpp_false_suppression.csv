@@ -1,0 +1,6 @@
+domain,dataset,model,variant,seeds,stpp_rmse_revisit_mean,stpp_rmse_new_place_mean,stpp_rmse_short_move_mean,stpp_rmse_long_move_mean,stpp_useful_mass_retention_mean,stpp_nonuseful_mass_retention_mean,stpp_false_suppression_index_mean,stpp_prior_rmse_delta_mean
+stpp,gowalla,DeepSTPP,base,3,0.034422,0.04344833333333333,0.03246266666666667,0.053477666666666666,,,,
+stpp,gowalla,DeepSTPP,correct_path_warrant,3,0.037349,0.044397,0.04121533333333333,0.046832000000000006,0.9060396666666666,0.6275653333333334,-0.2784746666666667,-2.6666666666666664e-06
+stpp,gowalla,DeepSTPP,generic_qk_warrant,3,0.03451233333333333,0.04463533333333333,0.033973333333333335,0.054224666666666664,,,,
+stpp,gowalla,DeepSTPP,open_path_no_gate,3,0.05295533333333333,0.05849766666666667,0.048680333333333325,0.06772866666666666,,,,
+stpp,gowalla,DeepSTPP,shuffled_pairing,3,,1.6357210000000002,0.7461893333333333,2.525252666666667,,,,

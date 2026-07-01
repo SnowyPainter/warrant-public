@@ -1,0 +1,30 @@
+{
+  "dataset": "hotpotqa",
+  "dataset_path": "data/processed/rag/hotpotqa/examples.jsonl",
+  "domain": "rag",
+  "implementation": "reference",
+  "model": "FiD",
+  "model_config": {
+    "batch_size": 512,
+    "eval_batch_size": 512,
+    "fusion_layers": 1,
+    "gate_leak": 0.7,
+    "gate_loss_weight": 0.0,
+    "hidden_dim": 96,
+    "max_passages": 5,
+    "passage_len": 48,
+    "question_len": 32,
+    "support_loss_weight": 1.0,
+    "vocab_size": 32128
+  },
+  "seed": 7,
+  "use_warrant": true,
+  "variant": "warrant",
+  "warrant": {
+    "aux_weight": 0.0,
+    "context_fields": [],
+    "context_schema": "none",
+    "gate_init": 0.95,
+    "gate_leak": 0.05
+  }
+}

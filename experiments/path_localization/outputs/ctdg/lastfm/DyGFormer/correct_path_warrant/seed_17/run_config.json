@@ -1,0 +1,6 @@
+{
+  "path_variant": "correct_path_warrant",
+  "source": "experiments/edge_query_adapter_ablation",
+  "source_output_dir": "experiments/edge_query_adapter_ablation/outputs/edge_conditioned_warrant/seed_17",
+  "source_variant": "edge_conditioned_warrant"
+}

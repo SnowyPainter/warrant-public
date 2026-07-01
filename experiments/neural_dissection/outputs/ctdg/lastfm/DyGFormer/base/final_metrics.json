@@ -1,0 +1,21 @@
+{
+  "accuracy": 0.6632092739475289,
+  "auc": 0.7361004139118147,
+  "dataset": "lastfm",
+  "domain": "ctdg",
+  "effective_implementation": "DyGFormer",
+  "elapsed_sec": 5.113,
+  "epoch": 10,
+  "eval_loss": 0.6077488660812378,
+  "gate_mean": 1.0,
+  "model": "DyGFormer",
+  "primary_metric": 0.7361004139118147,
+  "seed": 7,
+  "train_gate_mean": 0.9999999850988388,
+  "train_loss": 0.5111676082015038,
+  "train_warrant_logit_mean": 0.0,
+  "variant": "base",
+  "warrant_active_blocks": 0.0,
+  "warrant_logit_mean": 0.0,
+  "warrant_replacements": 0.0
+}

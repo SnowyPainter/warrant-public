@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.890487,
+  "auc": 0.955676,
+  "dataset": "wikipedia",
+  "domain": "ctdg",
+  "effective_implementation": "GraphMixer",
+  "elapsed_sec": 74.355,
+  "eval_loss": 0.591026,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "GraphMixer",
+  "output_dir": "experiments/main_benchmark/outputs/GraphMixer/37/ctdg/wikipedia/base",
+  "primary_metric": 0.955676,
+  "seed": 37,
+  "status": "completed",
+  "train_loss": 0.035031,
+  "variant": "base",
+  "warrant_active_blocks": 0.0,
+  "warrant_replacements": 0.0
+}

@@ -1,0 +1,70 @@
+experiment:
+  name: mass_diagnostic
+  seeds: [7, 17, 37]
+  device: cuda:0
+  output_root: experiments/mass_diagnostic/outputs
+  domains: [ctdg, rag, tkg]
+  variants: [base, warrant]
+  skip_completed: true
+
+training:
+  implementation: reference
+  progress: true
+  max_examples: 8192
+  epochs: 10
+  batch_size: 1024
+  learning_rate: 0.001
+  weight_decay: 0.0
+  history_len: 50
+  eval_ratio: 0.2
+  dropout: 0.1
+
+warrant:
+  gate_init: 0.95
+  gate_leak: 0.05
+
+tkg:
+  strict_time_history: false
+
+datasets:
+  ctdg:
+    name: lastfm
+    path: data/processed/ctdg/lastfm/events.csv
+  rag:
+    name: hotpotqa
+    path: data/processed/rag/hotpotqa/examples.jsonl
+  tkg:
+    name: gdelt
+    path: data/processed/tkg/gdelt/facts.csv
+
+models:
+  ctdg:
+    name: DyGFormer
+    config:
+      num_nodes: auto
+      edge_feat_dim: 1
+      hidden_dim: 128
+      time_dim: 32
+      num_layers: 2
+  rag:
+    name: FiD
+    config:
+      vocab_size: 32128
+      hidden_dim: 96
+      fusion_layers: 1
+      batch_size: 512
+      eval_batch_size: 512
+      gate_leak: 0.7
+      max_passages: 5
+      question_len: 32
+      passage_len: 48
+      support_loss_weight: 1.0
+      gate_loss_weight: 0.0
+  tkg:
+    name: xERTE
+    config:
+      num_entities: auto
+      num_relations: auto
+      hidden_dim: 128
+      time_dim: 32
+      expansion_layers: 2

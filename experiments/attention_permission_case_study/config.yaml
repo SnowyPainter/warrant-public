@@ -1,0 +1,39 @@
+experiment:
+  name: attention_permission_case_study
+  seed: 7
+  device: cuda:0
+  output_root: experiments/attention_permission_case_study/outputs
+
+dataset:
+  domain: rag
+  name: hotpotqa
+  path: data/processed/rag/hotpotqa/examples.jsonl
+
+model:
+  name: FiD
+  implementation: reference
+  vocab_size: 32128
+  hidden_dim: 96
+  fusion_layers: 1
+  max_passages: 5
+  question_len: 32
+  passage_len: 48
+  gate_leak: 0.7
+  gate_init: 0.95
+
+training:
+  max_examples: 8192
+  epochs: 5
+  batch_size: 256
+  eval_batch_size: 256
+  learning_rate: 0.001
+  weight_decay: 0.0
+  eval_ratio: 0.2
+  progress: true
+  save_checkpoint: true
+
+selection:
+  min_support_passages: 1
+  require_distractor: true
+  prefer_attention_permission_disagreement: true
+  num_map_cases: 12

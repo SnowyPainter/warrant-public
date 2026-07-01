@@ -1,0 +1,22 @@
+{
+  "accuracy": 0.0044,
+  "dataset": "gowalla",
+  "domain": "stpp",
+  "effective_implementation": "DeepSTPP",
+  "elapsed_sec": 39.721,
+  "eval_loss": 27.958336,
+  "examples": 50005.0,
+  "implementation": "reference",
+  "joint_nll": 27.958336,
+  "mae_time": 0.594447,
+  "model": "DeepSTPP",
+  "output_dir": "experiments/main_benchmark/outputs/DeepSTPP/37/stpp/gowalla/base",
+  "primary_metric": 0.048949,
+  "rmse_location": 0.048949,
+  "seed": 37,
+  "status": "completed",
+  "train_loss": 1.938329,
+  "variant": "base",
+  "warrant_active_blocks": 0.0,
+  "warrant_replacements": 0.0
+}

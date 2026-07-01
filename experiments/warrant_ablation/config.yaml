@@ -1,0 +1,55 @@
+experiment:
+  name: warrant_ablation
+  seeds: [7, 17, 37]
+  device: cuda:0
+  output_root: experiments/warrant_ablation/outputs
+  skip_completed: true
+
+training:
+  implementation: reference
+  progress: true
+  max_examples: 65536
+  epochs: 30
+  batch_size: 2048
+  learning_rate: 0.001
+  weight_decay: 0.0
+  history_len: 50
+  eval_ratio: 0.2
+  dropout: 0.1
+
+warrant:
+  gate_init: 0.95
+  gate_leak: 0.05
+
+tkg:
+  strict_time_history: false
+
+dataset:
+  domain: tkg
+  name: gdelt
+  path: data/processed/tkg/gdelt/facts.csv
+
+model:
+  name: xERTE
+  config:
+    num_entities: auto
+    num_relations: auto
+    hidden_dim: 128
+    time_dim: 32
+    expansion_layers: 2
+
+variants:
+  base:
+    description: Original xERTE TKG tail prediction model without Warrant.
+  attention_copy_control:
+    description: Historical tail copy path using attention mass only; no query-key permission gate.
+  full_value_gate:
+    description: Full Warrant operator, using query-conditioned value gate on attention weighted history terms.
+  logit_gate:
+    description: Query-key gate applied as attention-logit reweighting instead of value-term permission.
+  key_only_gate:
+    description: Value gate computed from historical fact keys only, with the query contribution removed.
+  query_only_gate:
+    description: Value gate computed from the query only, shared across history items.
+  shuffled_gate:
+    description: Full Warrant trained normally, but query-item gate pairing is shuffled across the batch at evaluation.

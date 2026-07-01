@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.087046,
+  "dataset": "gdelt",
+  "domain": "tkg",
+  "effective_implementation": "RENET",
+  "elapsed_sec": 263.379,
+  "eval_loss": 6.276084,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "RE-NET",
+  "mrr": 0.140587,
+  "output_dir": "experiments/main_benchmark/outputs/RE-NET/37/tkg/gdelt/warrant",
+  "primary_metric": 0.140587,
+  "seed": 37,
+  "status": "completed",
+  "train_loss": 5.524065,
+  "variant": "warrant",
+  "warrant_active_blocks": 1.0,
+  "warrant_replacements": 0.0
+}

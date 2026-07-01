@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.879158,
+  "auc": 0.944231,
+  "dataset": "wikipedia",
+  "domain": "ctdg",
+  "effective_implementation": "DyGFormer",
+  "elapsed_sec": 73.792,
+  "eval_loss": 0.716115,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "DyGFormer",
+  "output_dir": "experiments/main_benchmark/outputs/DyGFormer/37/ctdg/wikipedia/base",
+  "primary_metric": 0.944231,
+  "seed": 37,
+  "status": "completed",
+  "train_loss": 0.036051,
+  "variant": "base",
+  "warrant_active_blocks": 0.0,
+  "warrant_replacements": 0.0
+}

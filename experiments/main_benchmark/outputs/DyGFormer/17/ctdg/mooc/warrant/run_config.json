@@ -1,0 +1,22 @@
+{
+  "dataset": "mooc",
+  "dataset_path": "data/processed/ctdg/mooc/events.csv",
+  "domain": "ctdg",
+  "implementation": "reference",
+  "model": "DyGFormer",
+  "model_config": {
+    "edge_feat_dim": 1,
+    "hidden_dim": 128,
+    "num_layers": 2,
+    "num_nodes": "auto",
+    "time_dim": 32
+  },
+  "seed": 17,
+  "use_warrant": true,
+  "variant": "warrant",
+  "warrant": {
+    "aux_weight": 0.0,
+    "gate_init": 0.95,
+    "gate_leak": 0.05
+  }
+}

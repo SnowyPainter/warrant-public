@@ -1,0 +1,20 @@
+{
+  "dataset": "natural_questions",
+  "dataset_path": "data/processed/rag/natural_questions/examples.jsonl",
+  "domain": "rag",
+  "implementation": "reference",
+  "model": "LED",
+  "model_config": {
+    "encoder_layers": 2,
+    "hidden_dim": 128,
+    "vocab_size": 50265
+  },
+  "seed": 37,
+  "use_warrant": false,
+  "variant": "base",
+  "warrant": {
+    "aux_weight": 0.0,
+    "gate_init": 0.95,
+    "gate_leak": 0.05
+  }
+}
