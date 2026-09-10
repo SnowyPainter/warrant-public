@@ -1,0 +1,17 @@
+experiment:
+  name: marginal_value_audit
+  device: cuda:0
+  seeds: [7, 17, 37]
+  output_root: experiments/marginal_value_audit/outputs_3seed
+
+audit:
+  examples_per_domain: 128
+  top_k: 5
+  zero_tolerance: 1.0e-6
+
+checkpoints:
+  ctdg: experiments/warrant_need_score/outputs/ctdg/lastfm/DyGFormer/base/seed_{seed}/checkpoint.pt
+  mtpp: experiments/warrant_need_score/outputs/mtpp/retweets/AttNHP/base/seed_{seed}/checkpoint.pt
+  rag: experiments/warrant_need_score/outputs/rag/hotpotqa/FiD/base/seed_{seed}/checkpoint.pt
+  stpp: experiments/warrant_need_score/outputs/stpp/earthquake/DeepSTPP/base/seed_{seed}/checkpoint.pt
+  tkg: experiments/warrant_need_score/outputs/tkg/gdelt/xERTE/base/seed_{seed}/checkpoint.pt

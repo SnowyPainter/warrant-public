@@ -1,0 +1,46 @@
+experiment:
+  name: permission_auxiliary_seed7
+  seeds: [7]
+  device: cuda:0
+  output_root: experiments/permission_decomposition/outputs_auxiliary_001
+  skip_completed: true
+
+selection:
+  domains: [ctdg]
+  variants: [correct_path_warrant]
+
+training:
+  implementation: reference
+  progress: false
+  max_examples: 32768
+  epochs: 10
+  batch_size: 2048
+  learning_rate: 0.001
+  weight_decay: 0.0
+  history_len: 50
+  eval_ratio: 0.2
+  dropout: 0.1
+  edge_gate_aux_weight: 0.01
+
+warrant:
+  gate_init: 0.95
+  gate_leak: 0.05
+
+tkg:
+  strict_time_history: false
+
+variants:
+  correct_path_warrant:
+    description: "Edge permission with auxiliary counterpart-evidence supervision (weight 0.01)."
+
+tasks:
+  ctdg:
+    dataset: lastfm
+    path: data/processed/ctdg/lastfm/events.csv
+    model: DyGFormer
+    model_config:
+      num_nodes: auto
+      edge_feat_dim: 1
+      hidden_dim: 128
+      time_dim: 32
+      num_layers: 2

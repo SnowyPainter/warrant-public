@@ -35,6 +35,8 @@ RESULT_COLUMNS = [
     "variant",
     "seed",
     "status",
+    "total_parameters",
+    "trainable_parameters",
     "train_loss",
     "eval_loss",
     "support_mrr",
@@ -523,7 +525,7 @@ def evaluate(model, tokenizer, examples, eval_indices, marker_tokens, config, de
             valid_cpu = valid.detach().cpu().bool()
             alpha_mass = torch.full_like(scores, float("nan"))
             effective_mass = torch.full_like(scores, float("nan"))
-            if result.aux:
+            if {"attention", "permission", "effective_mass"}.issubset(result.aux):
                 attention = result.aux["attention"].detach()
                 permission = result.aux["permission"].detach()
                 effective = result.aux["effective_mass"].detach()
@@ -709,6 +711,8 @@ def run_one(config: dict[str, Any], variant: str, seed: int, *, force: bool, dry
         freeze_encoder=bool(config["model"].get("freeze_encoder", False)),
         vocab_size=len(tokenizer),
     ).to(device)
+    total_parameters = sum(param.numel() for param in model.parameters())
+    trainable_parameters = sum(param.numel() for param in model.parameters() if param.requires_grad)
     base_lr = float(config["training"]["learning_rate"])
     gate_lr = base_lr * float(config["training"].get("gate_learning_rate_multiplier", 1.0))
     gate_params = []
@@ -742,6 +746,8 @@ def run_one(config: dict[str, Any], variant: str, seed: int, *, force: bool, dry
         "variant": variant,
         "seed": seed,
         "status": "completed",
+        "total_parameters": total_parameters,
+        "trainable_parameters": trainable_parameters,
         "train_loss": train_loss,
         **metrics,
         "elapsed_sec": time.time() - start,

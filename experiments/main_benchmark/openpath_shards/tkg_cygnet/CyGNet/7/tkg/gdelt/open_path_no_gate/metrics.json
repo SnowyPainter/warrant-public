@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.09025,
+  "dataset": "gdelt",
+  "domain": "tkg",
+  "effective_implementation": "CyGNet",
+  "elapsed_sec": 35.393,
+  "eval_loss": 6.404286,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "CyGNet",
+  "mrr": 0.145232,
+  "output_dir": "experiments/main_benchmark/openpath_shards/tkg_cygnet/CyGNet/7/tkg/gdelt/open_path_no_gate",
+  "primary_metric": 0.145232,
+  "seed": 7,
+  "status": "completed",
+  "train_loss": 5.887928,
+  "variant": "open_path_no_gate",
+  "warrant_active_blocks": 0.0,
+  "warrant_replacements": 0.0
+}

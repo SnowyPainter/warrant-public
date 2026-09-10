@@ -1,0 +1,22 @@
+{
+  "accuracy": 0.0049,
+  "dataset": "gowalla",
+  "domain": "stpp",
+  "effective_implementation": "TransformerSTPP",
+  "elapsed_sec": 54.984,
+  "eval_loss": 26.637989,
+  "examples": 50005.0,
+  "implementation": "reference",
+  "joint_nll": 26.637989,
+  "mae_time": 0.574835,
+  "model": "Transformer-STPP",
+  "output_dir": "experiments/main_benchmark/openpath_shards/stpp_transformer_stpp/Transformer-STPP/7/stpp/gowalla/open_path_no_gate",
+  "primary_metric": 0.043914,
+  "rmse_location": 0.043914,
+  "seed": 7,
+  "status": "completed",
+  "train_loss": 1.928921,
+  "variant": "open_path_no_gate",
+  "warrant_active_blocks": 1.0,
+  "warrant_replacements": 0.0
+}

@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.13671,
+  "dataset": "icews14",
+  "domain": "tkg",
+  "effective_implementation": "CyGNet",
+  "elapsed_sec": 36.628,
+  "eval_loss": 6.084162,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "CyGNet",
+  "mrr": 0.210249,
+  "output_dir": "experiments/main_benchmark/openpath_shards/tkg_cygnet/CyGNet/7/tkg/icews14/open_path_no_gate",
+  "primary_metric": 0.210249,
+  "seed": 7,
+  "status": "completed",
+  "train_loss": 5.526706,
+  "variant": "open_path_no_gate",
+  "warrant_active_blocks": 0.0,
+  "warrant_replacements": 0.0
+}

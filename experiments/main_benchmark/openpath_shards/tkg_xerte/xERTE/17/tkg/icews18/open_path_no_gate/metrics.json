@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.102685,
+  "dataset": "icews18",
+  "domain": "tkg",
+  "effective_implementation": "XERTE",
+  "elapsed_sec": 28.632,
+  "eval_loss": 7.392718,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "xERTE",
+  "mrr": 0.159013,
+  "output_dir": "experiments/main_benchmark/openpath_shards/tkg_xerte/xERTE/17/tkg/icews18/open_path_no_gate",
+  "primary_metric": 0.159013,
+  "seed": 17,
+  "status": "completed",
+  "train_loss": 5.05348,
+  "variant": "open_path_no_gate",
+  "warrant_active_blocks": 0.0,
+  "warrant_replacements": 0.0
+}

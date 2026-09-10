@@ -1,7 +1,14 @@
 domain,dataset,model,variant,path_role,seeds,metric,direction,primary_mean,primary_std,eval_loss_mean,eval_loss_std
 ctdg,lastfm,DyGFormer,base,no_warrant,3,auc,higher,0.7860486666666666,0.001396341768097422,0.6097673333333333,0.0028048225136955035
 ctdg,lastfm,DyGFormer,generic_qk_warrant,weak_path_generic_attention,3,auc,higher,0.790326,0.000297026934805573,0.5968656666666666,0.003946720959649064
-ctdg,lastfm,DyGFormer,correct_path_warrant,metric_defining_path,3,auc,higher,0.8979676666666666,0.0028992863489716134,0.39154733333333336,0.007345229358796987
+ctdg,lastfm,DyGFormer,open_path_no_gate,metric_path_open_g_equals_one,3,auc,higher,0.853233,0.007071320385896802,0.484704,0.00613306554669035
+ctdg,lastfm,DyGFormer,scalar_gate,metric_path_query_scalar_gate,3,auc,higher,0.853823,0.007661480862078822,0.480923,0.011292653585406771
+ctdg,lastfm,DyGFormer,item_only_gate,metric_path_item_only_gate,3,auc,higher,0.8481626666666667,0.006423878060278944,0.48697066666666666,0.013009320748345514
+ctdg,lastfm,DyGFormer,normalized_gate,metric_path_normalized_query_item_gate,3,auc,higher,0.8649356666666667,0.0029854189544071103,0.4669743333333333,0.006301490485062506
+ctdg,lastfm,DyGFormer,attention_adapter,metric_path_attention_reweighting_control,3,auc,higher,0.8649356666666667,0.0029854189544071103,0.466974,0.00630120155208513
+ctdg,lastfm,DyGFormer,generic_open_path,generic_gate_plus_metric_path_g_equals_one,3,auc,higher,0.8563896666666666,0.006370690255642128,0.4755853333333333,0.013975073571660846
+ctdg,lastfm,DyGFormer,combined_full,generic_gate_plus_metric_path_query_item_gate,3,auc,higher,0.855937,0.0045623543264415554,0.4730026666666667,0.005424768597215294
+ctdg,lastfm,DyGFormer,correct_path_warrant,metric_defining_path,3,auc,higher,0.855364,0.0035804721755656435,0.47868333333333335,0.002114602878398992
 ctdg,lastfm,DyGFormer,shuffled_pairing,query_item_pairing_control,3,auc,higher,0.637646,0.0011394897981114197,0.866045,0.005942514703389455
 mtpp,retweets,AttNHP,base,no_warrant,1,mark_mrr,higher,0.755474,0.0,40.945385,0.0
 mtpp,retweets,AttNHP,generic_qk_warrant,weak_path_generic_attention,1,mark_mrr,higher,0.77129,0.0,41.007889,0.0

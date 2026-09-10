@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.927868,
+  "auc": 0.977011,
+  "dataset": "mooc",
+  "domain": "ctdg",
+  "effective_implementation": "DyGFormer",
+  "elapsed_sec": 210.821,
+  "eval_loss": 0.222433,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "DyGFormer",
+  "output_dir": "experiments/main_benchmark/openpath_shards/dygformer_rest/DyGFormer/37/ctdg/mooc/open_path_no_gate",
+  "primary_metric": 0.977011,
+  "seed": 37,
+  "status": "completed",
+  "train_loss": 0.12163,
+  "variant": "open_path_no_gate",
+  "warrant_active_blocks": 3.0,
+  "warrant_replacements": 2.0
+}

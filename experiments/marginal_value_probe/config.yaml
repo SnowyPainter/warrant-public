@@ -1,0 +1,24 @@
+experiment:
+  name: marginal_value_probe
+  device: cuda:0
+  output_root: experiments/marginal_value_probe/outputs
+  seeds: [7, 17, 37]
+
+data:
+  domains: [ctdg, rag]
+  examples_per_domain: 160
+  top_k: 5
+  split: [0.65, 0.15, 0.20]
+
+training:
+  hidden_dim: 96
+  epochs: 250
+  patience: 30
+  batch_size: 512
+  learning_rate: 0.001
+  weight_decay: 0.0001
+
+checkpoints:
+  ctdg: experiments/warrant_need_score/outputs/ctdg/lastfm/DyGFormer/base/seed_7/checkpoint.pt
+  rag: experiments/warrant_need_score/outputs/rag/hotpotqa/FiD/base/seed_7/checkpoint.pt
+

@@ -1,0 +1,21 @@
+{
+  "accuracy": 0.55158,
+  "dataset": "retweets",
+  "domain": "mtpp",
+  "effective_implementation": "AttNHP",
+  "elapsed_sec": 52.152,
+  "eval_loss": 194.63577,
+  "examples": 55201.0,
+  "implementation": "reference",
+  "mae_time": 20745.935492,
+  "mark_mrr": 0.764725,
+  "model": "AttNHP",
+  "output_dir": "experiments/main_benchmark/openpath_shards/mtpp_attnhp/AttNHP/7/mtpp/retweets/open_path_no_gate",
+  "primary_metric": 0.764725,
+  "seed": 7,
+  "status": "completed",
+  "train_loss": 194.585183,
+  "variant": "open_path_no_gate",
+  "warrant_active_blocks": 1.0,
+  "warrant_replacements": 0.0
+}

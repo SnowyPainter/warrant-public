@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.94099,
+  "auc": 0.981876,
+  "dataset": "wikipedia",
+  "domain": "ctdg",
+  "effective_implementation": "GraphMixer",
+  "elapsed_sec": 143.774,
+  "eval_loss": 0.350419,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "GraphMixer",
+  "output_dir": "experiments/main_benchmark/openpath_shards/graphmixer/GraphMixer/7/ctdg/wikipedia/open_path_no_gate",
+  "primary_metric": 0.981876,
+  "seed": 7,
+  "status": "completed",
+  "train_loss": 0.030311,
+  "variant": "open_path_no_gate",
+  "warrant_active_blocks": 1.0,
+  "warrant_replacements": 0.0
+}

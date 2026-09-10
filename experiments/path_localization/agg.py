@@ -19,7 +19,19 @@ from experiments.path_localization.common import PATH_CLAIMS, VARIANT_ROLES  # n
 
 DEFAULT_RESULTS = Path(__file__).resolve().parent / "outputs" / "results.csv"
 DEFAULT_OUTPUT = Path(__file__).resolve().parent / "outputs" / "analysis"
-VARIANT_ORDER = ["base", "generic_qk_warrant", "open_path_no_gate", "correct_path_warrant", "shuffled_pairing"]
+VARIANT_ORDER = [
+    "base",
+    "generic_qk_warrant",
+    "open_path_no_gate",
+    "scalar_gate",
+    "item_only_gate",
+    "normalized_gate",
+    "attention_adapter",
+    "generic_open_path",
+    "combined_full",
+    "correct_path_warrant",
+    "shuffled_pairing",
+]
 
 
 def parse_args() -> argparse.Namespace:

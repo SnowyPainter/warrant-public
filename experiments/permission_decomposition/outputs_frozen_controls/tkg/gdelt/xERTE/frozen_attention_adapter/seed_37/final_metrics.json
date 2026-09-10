@@ -1,0 +1,18 @@
+{
+  "epoch": 30,
+  "train_loss": 5.150965947371263,
+  "gate_mean": 1.0,
+  "warrant_logit_mean": 2.306258644376482,
+  "warrant_tail_mass_mean": 1.0,
+  "eval_loss": 6.3165450777326315,
+  "primary_metric": 0.14087048745109115,
+  "mrr": 0.14087048745109115,
+  "accuracy": 0.08643576441867562,
+  "domain": "tkg",
+  "dataset": "gdelt",
+  "model": "xERTE",
+  "variant": "frozen_attention_adapter",
+  "seed": 37,
+  "trainable_parameters": 66306,
+  "frozen_parameters": 1312268
+}

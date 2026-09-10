@@ -1,0 +1,11 @@
+{
+  "epoch": 1,
+  "train_loss": 24.69128131866455,
+  "gate_mean": 1.0,
+  "warrant_logit_mean": 0.0,
+  "warrant_tail_mass_mean": 1.0,
+  "eval_loss": 18.893152236938477,
+  "primary_metric": 0.030198412913449324,
+  "mrr": 0.030198412913449324,
+  "accuracy": 0.019417475728155338
+}

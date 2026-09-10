@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.13816,
+  "dataset": "icews14",
+  "domain": "tkg",
+  "effective_implementation": "RENET",
+  "elapsed_sec": 34.931,
+  "eval_loss": 5.921722,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "RE-NET",
+  "mrr": 0.215607,
+  "output_dir": "experiments/main_benchmark/openpath_shards/tkg_renet/RE-NET/17/tkg/icews14/open_path_no_gate",
+  "primary_metric": 0.215607,
+  "seed": 17,
+  "status": "completed",
+  "train_loss": 4.445731,
+  "variant": "open_path_no_gate",
+  "warrant_active_blocks": 0.0,
+  "warrant_replacements": 0.0
+}

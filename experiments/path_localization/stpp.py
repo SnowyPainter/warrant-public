@@ -4,7 +4,7 @@ import torch
 
 from evaluation.evaluate import stpp_joint_nll
 from experiments.neural_dissection.run import STPPRunner, batches, finite_mean, gate_stats
-from experiments.path_localization.common import force_open_warrant_block
+from experiments.path_localization.common import decompose_warrant_block, force_open_warrant_block
 from experiments.path_localization.rag import _nontrivial_permutation
 
 
@@ -59,8 +59,12 @@ class PathSTPPRunner(STPPRunner):
 
 
 def configure_model(model: torch.nn.Module, variant: str) -> None:
-    if variant == "open_path_no_gate":
+    if variant in {"open_path_no_gate", "generic_open_path"}:
         if getattr(model, "prediction_warrant", None) is None:
             raise ValueError("STPP open_path_no_gate requires a prediction Warrant path")
         force_open_warrant_block(model.prediction_warrant)
+    elif variant in {"scalar_gate", "item_only_gate", "normalized_gate", "attention_adapter"}:
+        if getattr(model, "prediction_warrant", None) is None:
+            raise ValueError(f"STPP {variant} requires a prediction Warrant path")
+        decompose_warrant_block(model.prediction_warrant, variant)
     return None

@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.08552,
+  "dataset": "gdelt",
+  "domain": "tkg",
+  "effective_implementation": "XERTE",
+  "elapsed_sec": 38.015,
+  "eval_loss": 6.375967,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "xERTE",
+  "mrr": 0.139062,
+  "output_dir": "experiments/main_benchmark/openpath_shards/tkg_xerte/xERTE/37/tkg/gdelt/open_path_no_gate",
+  "primary_metric": 0.139062,
+  "seed": 37,
+  "status": "completed",
+  "train_loss": 4.912063,
+  "variant": "open_path_no_gate",
+  "warrant_active_blocks": 0.0,
+  "warrant_replacements": 0.0
+}

@@ -99,6 +99,62 @@ class OpenPathEdgeAdapter(nn.Module):
         return self.inner.context_scale * src_delta, self.inner.context_scale * dst_delta, info
 
 
+class DecomposedEdgeAdapter(OpenPathEdgeAdapter):
+    """Architecture-matched edge path with one isolated weighting freedom."""
+
+    def __init__(self, inner: nn.Module, mode: str) -> None:
+        super().__init__(inner)
+        self.mode = mode
+        hidden_dim = int(inner.hidden_dim)
+        if mode == "scalar_gate":
+            self.scalar_scorer = nn.Linear(hidden_dim, 1)
+            nn.init.zeros_(self.scalar_scorer.weight)
+            nn.init.constant_(self.scalar_scorer.bias, 2.944439)
+        elif mode == "item_only_gate":
+            self.item_scorer = nn.Linear(hidden_dim, 1)
+            nn.init.zeros_(self.item_scorer.weight)
+            nn.init.constant_(self.item_scorer.bias, 2.944439)
+
+    def _side_context(
+        self,
+        query: torch.Tensor,
+        memory: torch.Tensor,
+        delta_t_enc: torch.Tensor,
+        stats: torch.Tensor,
+        valid_mask: torch.Tensor,
+    ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+        tokens = self.inner.token_encoder(torch.cat([memory, stats], dim=-1))
+        tokens = tokens * valid_mask.unsqueeze(-1).to(tokens.dtype)
+        weights = self.inner._semantic_attention(query, tokens, delta_t_enc, valid_mask)
+        valid = valid_mask.to(tokens.dtype)
+
+        if self.mode == "scalar_gate":
+            scalar = torch.sigmoid(self.scalar_scorer(query))
+            gate = scalar * valid
+            effective = weights * gate
+        elif self.mode == "item_only_gate":
+            gate = torch.sigmoid(self.item_scorer(tokens)).squeeze(-1) * valid
+            effective = weights * gate
+        else:
+            gate, _ = self.inner.validity(query, tokens, delta_t_enc, stats, valid_mask)
+            if self.mode == "normalized_gate":
+                effective = weights * gate
+                effective = effective / effective.sum(dim=-1, keepdim=True).clamp_min(1.0e-9)
+            elif self.mode == "attention_adapter":
+                # Same q-item scorer, but it changes the normalized routing
+                # distribution via additive logits rather than sigmoid
+                # permission or independent total-mass scaling.
+                _, logits = self.inner.validity(query, tokens, delta_t_enc, stats, valid_mask)
+                logits = logits.masked_fill(~valid_mask, torch.finfo(logits.dtype).min)
+                effective = torch.softmax(weights.clamp_min(1.0e-8).log() + logits, dim=-1) * valid
+                effective = effective / effective.sum(dim=-1, keepdim=True).clamp_min(1.0e-9)
+            else:
+                raise ValueError(f"Unsupported decomposition mode {self.mode!r}")
+
+        context = (tokens * effective.unsqueeze(-1)).sum(dim=1)
+        return context, gate, effective
+
+
 def run_edge_ablation_source(spec, device: torch.device, out_dir: Path, *, force: bool = False) -> dict[str, Any]:
     """Use the CTDG edge-query ablation as the source of truth.
 
@@ -205,7 +261,7 @@ class PathCTDGRunner(CTDGRunner):
 
 
 def configure_model(model: torch.nn.Module, variant: str) -> None:
-    if variant == "open_path_no_gate":
+    if variant in {"open_path_no_gate", "generic_open_path"}:
         if getattr(model, "edge_warrant", None) is None:
             raise ValueError("CTDG open_path_no_gate requires an edge Warrant adapter")
         model.edge_warrant = OpenPathEdgeAdapter(model.edge_warrant)
@@ -214,3 +270,13 @@ def configure_model(model: torch.nn.Module, variant: str) -> None:
         if getattr(model, "edge_warrant", None) is None:
             raise ValueError("CTDG shuffled_pairing requires an edge Warrant adapter")
         model.edge_warrant = edge_ablation.ShuffledEdgeQueryAdapter(model.edge_warrant)
+        return
+    if variant in {"scalar_gate", "item_only_gate", "normalized_gate", "attention_adapter"}:
+        if getattr(model, "edge_warrant", None) is None:
+            raise ValueError(f"CTDG {variant} requires an edge Warrant adapter")
+        model.edge_warrant = DecomposedEdgeAdapter(model.edge_warrant, variant)
+        return
+    if variant == "combined_full":
+        if getattr(model, "edge_warrant", None) is None:
+            raise ValueError("CTDG combined_full requires an edge Warrant adapter")
+        return

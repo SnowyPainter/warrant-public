@@ -16,6 +16,78 @@ class BertWarrantOutput:
     aux: dict[str, torch.Tensor]
 
 
+class QiuGatedRobertaSelfAttention(nn.Module):
+    """Faithful G1/G2 operators from Qiu et al. for RoBERTa attention.
+
+    G2 gates every projected value using the corresponding key/value-token
+    hidden state before the attention-weighted sum. G1 gates every SDPA output
+    using the corresponding query-token hidden state after the weighted sum.
+    Scores are head-specific and element-wise, with shape [B, H, L, D].
+    """
+
+    def __init__(
+        self,
+        base_attention: nn.Module,
+        *,
+        position: str,
+        gate_init: float = 0.95,
+    ) -> None:
+        super().__init__()
+        if position not in {"g1", "g2"}:
+            raise ValueError(f"unsupported Qiu gate position: {position}")
+        self.query = base_attention.query
+        self.key = base_attention.key
+        self.value = base_attention.value
+        self.dropout = base_attention.dropout
+        self.config = base_attention.config
+        self.num_attention_heads = int(base_attention.num_attention_heads)
+        self.attention_head_size = int(base_attention.attention_head_size)
+        self.all_head_size = int(base_attention.all_head_size)
+        self.scaling = getattr(base_attention, "scaling", self.attention_head_size**-0.5)
+        self.is_decoder = bool(getattr(base_attention, "is_decoder", False))
+        self.is_causal = bool(getattr(base_attention, "is_causal", False))
+        self.layer_idx = getattr(base_attention, "layer_idx", None)
+        self.position = position
+        self.gate_projection = nn.Linear(int(self.config.hidden_size), self.all_head_size)
+        probability = min(max(float(gate_init), 1.0e-4), 1.0 - 1.0e-4)
+        nn.init.normal_(self.gate_projection.weight, mean=0.0, std=1.0e-3)
+        nn.init.constant_(self.gate_projection.bias, math.log(probability / (1.0 - probability)))
+        self.last_gate: torch.Tensor | None = None
+
+    def transpose_for_scores(self, tensor: torch.Tensor) -> torch.Tensor:
+        new_shape = tensor.size()[:-1] + (self.num_attention_heads, self.attention_head_size)
+        return tensor.view(new_shape).transpose(1, 2)
+
+    def _gate(self, hidden_states: torch.Tensor) -> torch.Tensor:
+        return torch.sigmoid(self.transpose_for_scores(self.gate_projection(hidden_states)))
+
+    def forward(
+        self,
+        hidden_states: torch.Tensor,
+        attention_mask: torch.Tensor | None = None,
+        past_key_values: Any | None = None,
+        **kwargs: Any,
+    ) -> tuple[torch.Tensor, torch.Tensor]:
+        input_shape = hidden_states.shape[:-1]
+        query_layer = self.transpose_for_scores(self.query(hidden_states))
+        key_layer = self.transpose_for_scores(self.key(hidden_states))
+        value_layer = self.transpose_for_scores(self.value(hidden_states))
+
+        scores = torch.matmul(query_layer, key_layer.transpose(-1, -2)) * self.scaling
+        if attention_mask is not None:
+            scores = scores + attention_mask
+        attention_probs = self.dropout(torch.softmax(scores, dim=-1))
+
+        gate = self._gate(hidden_states)
+        if self.position == "g2":
+            output = torch.matmul(attention_probs, value_layer * gate)
+        else:
+            output = torch.matmul(attention_probs, value_layer) * gate
+        self.last_gate = gate
+        output = output.transpose(1, 2).reshape(*input_shape, self.all_head_size).contiguous()
+        return output, attention_probs
+
+
 class CLSWarrantRobertaSelfAttention(nn.Module):
     """RoBERTa self-attention with Warrant on final-layer CLS value terms.
 
@@ -351,6 +423,17 @@ class BertHotpotMultiCandidateWarrantSelector(nn.Module):
         if vocab_size is not None:
             self.encoder.resize_token_embeddings(int(vocab_size))
         hidden = int(self.encoder.config.hidden_size)
+        self.qiu_attentions = nn.ModuleList()
+        if self.variant in {"qiu_g1", "qiu_g2"}:
+            position = self.variant.removeprefix("qiu_")
+            for layer in self.encoder.encoder.layer:
+                qiu_attention = QiuGatedRobertaSelfAttention(
+                    layer.attention.self,
+                    position=position,
+                    gate_init=gate_init,
+                )
+                layer.attention.self = qiu_attention
+                self.qiu_attentions.append(qiu_attention)
         self.post_mlp = (
             nn.Sequential(nn.Linear(hidden, hidden), nn.GELU(), nn.Dropout(dropout), nn.Linear(hidden, hidden))
             if self.variant == "post_mlp"
@@ -440,6 +523,8 @@ class BertHotpotMultiCandidateWarrantSelector(nn.Module):
         logits = self.classifier(marker_hidden).squeeze(-1)
         logits = logits.masked_fill(~candidate_valid_mask.to(logits.device, dtype=torch.bool), -1.0e4)
         aux: dict[str, torch.Tensor] = {}
+        if self.qiu_attentions and self.qiu_attentions[-1].last_gate is not None:
+            aux["qiu_gate"] = self.qiu_attentions[-1].last_gate
         if self.warrant_attention is not None and self.warrant_attention.last_attention is not None:
             attention = self.warrant_attention.last_attention
             gate = self.warrant_attention.last_gate

@@ -1,0 +1,22 @@
+{
+  "accuracy": 0.0039,
+  "dataset": "gowalla",
+  "domain": "stpp",
+  "effective_implementation": "DeepSTPP",
+  "elapsed_sec": 65.775,
+  "eval_loss": 28.640236,
+  "examples": 50005.0,
+  "implementation": "reference",
+  "joint_nll": 28.640236,
+  "mae_time": 0.559544,
+  "model": "DeepSTPP",
+  "output_dir": "experiments/main_benchmark/openpath_shards/stpp_deepstpp/DeepSTPP/17/stpp/gowalla/open_path_no_gate",
+  "primary_metric": 0.045676,
+  "rmse_location": 0.045676,
+  "seed": 17,
+  "status": "completed",
+  "train_loss": 1.944942,
+  "variant": "open_path_no_gate",
+  "warrant_active_blocks": 1.0,
+  "warrant_replacements": 0.0
+}

@@ -12,7 +12,7 @@ selection:
   domains: all
   datasets: all
   models: all
-  variants: [base, warrant]
+  variants: [base, warrant, open_path_no_gate]
 
 training:
   implementation: reference
@@ -160,4 +160,6 @@ variants:
   base:
     use_warrant: false
   warrant:
+    use_warrant: true
+  open_path_no_gate:
     use_warrant: true

@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.818241,
+  "auc": 0.891279,
+  "dataset": "lastfm",
+  "domain": "ctdg",
+  "effective_implementation": "TGAT",
+  "elapsed_sec": 96.5,
+  "eval_loss": 0.600337,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "TGAT",
+  "output_dir": "experiments/main_benchmark/openpath_shards/tgat/TGAT/7/ctdg/lastfm/open_path_no_gate",
+  "primary_metric": 0.891279,
+  "seed": 7,
+  "status": "completed",
+  "train_loss": 0.273811,
+  "variant": "open_path_no_gate",
+  "warrant_active_blocks": 1.0,
+  "warrant_replacements": 0.0
+}

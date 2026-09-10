@@ -1,0 +1,2 @@
+accuracy,epoch,eval_loss,gate_mean,mrr,primary_metric,train_loss,warrant_logit_mean,warrant_tail_mass_mean
+0.019417,1,18.915915,1.0,0.031882,0.031882,24.761315,2.898638,1.0

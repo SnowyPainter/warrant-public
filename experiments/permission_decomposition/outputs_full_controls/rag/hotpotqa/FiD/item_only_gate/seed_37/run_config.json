@@ -1,0 +1,26 @@
+{
+  "spec": {
+    "dataset": "hotpotqa",
+    "dataset_path": "/workspace/warrant/data/processed/rag/hotpotqa/examples.jsonl",
+    "domain": "rag",
+    "implementation": "reference",
+    "model": "FiD",
+    "model_config": {
+      "batch_size": 512,
+      "eval_batch_size": 512,
+      "fusion_layers": 1,
+      "gate_leak": 0.7,
+      "hidden_dim": 96,
+      "max_passages": 5,
+      "passage_len": 48,
+      "question_len": 32,
+      "vocab_size": 32128
+    },
+    "seed": 37,
+    "use_warrant": true,
+    "variant": "item_only_gate"
+  },
+  "variant": {
+    "description": "Item-conditioned gate without query conditioning."
+  }
+}

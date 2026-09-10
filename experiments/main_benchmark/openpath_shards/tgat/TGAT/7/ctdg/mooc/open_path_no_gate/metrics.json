@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.922032,
+  "auc": 0.971451,
+  "dataset": "mooc",
+  "domain": "ctdg",
+  "effective_implementation": "TGAT",
+  "elapsed_sec": 90.233,
+  "eval_loss": 0.25028,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "TGAT",
+  "output_dir": "experiments/main_benchmark/openpath_shards/tgat/TGAT/7/ctdg/mooc/open_path_no_gate",
+  "primary_metric": 0.971451,
+  "seed": 7,
+  "status": "completed",
+  "train_loss": 0.141982,
+  "variant": "open_path_no_gate",
+  "warrant_active_blocks": 1.0,
+  "warrant_replacements": 0.0
+}

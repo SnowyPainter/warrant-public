@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.937862,
+  "auc": 0.983123,
+  "dataset": "wikipedia",
+  "domain": "ctdg",
+  "effective_implementation": "TGAT",
+  "elapsed_sec": 110.438,
+  "eval_loss": 0.343827,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "TGAT",
+  "output_dir": "experiments/main_benchmark/openpath_shards/tgat/TGAT/37/ctdg/wikipedia/open_path_no_gate",
+  "primary_metric": 0.983123,
+  "seed": 37,
+  "status": "completed",
+  "train_loss": 0.035807,
+  "variant": "open_path_no_gate",
+  "warrant_active_blocks": 1.0,
+  "warrant_replacements": 0.0
+}

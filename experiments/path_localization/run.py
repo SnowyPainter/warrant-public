@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 import torch
+import numpy as np
 import yaml
 from tqdm.auto import tqdm
 
@@ -66,9 +67,6 @@ def parse_args() -> argparse.Namespace:
 
 
 def run_spec(config: dict[str, Any], spec, device: torch.device, out_dir: Path, *, force: bool = False) -> dict[str, Any]:
-    if spec.domain == "ctdg" and spec.variant in ctdg.EDGE_VARIANT_BY_PATH_VARIANT:
-        return ctdg.run_edge_ablation_source(spec, device, out_dir, force=False)
-
     started = time.time()
     set_seed(spec.seed)
     runner_cls = RUNNER_BY_DOMAIN[spec.domain]
@@ -78,6 +76,19 @@ def run_spec(config: dict[str, Any], spec, device: torch.device, out_dir: Path, 
     configure_variant(model, spec)
     CONFIGURE_BY_DOMAIN[spec.domain](model, spec.variant)
     model.to(device)
+
+    track_gradients = bool(config.get("training", {}).get("track_gradients", False))
+    gradient_trace: dict[str, list[float]] = {"permission": [], "attention": []}
+    hook_handles = []
+    for name, parameter in model.named_parameters() if track_gradients else []:
+        lowered = name.lower()
+        bucket = None
+        if "warrant" in lowered and any(token in lowered for token in ("scorer", "validity", "query_proj", "key_proj")):
+            bucket = "permission"
+        elif any(token in lowered for token in ("attn", "attention", "semantic_score")) and "warrant" not in lowered:
+            bucket = "attention"
+        if bucket is not None and parameter.requires_grad:
+            hook_handles.append(parameter.register_hook(lambda grad, b=bucket: gradient_trace[b].append(float(grad.detach().norm().cpu()))))
 
     training = config["training"]
     opt = torch.optim.AdamW(
@@ -95,12 +106,42 @@ def run_spec(config: dict[str, Any], spec, device: torch.device, out_dir: Path, 
     )
     last_train: dict[str, float] = {}
     last_eval: dict[str, float] = {}
+    eval_every = max(1, int(training.get("eval_every", 1)))
     for epoch in iterator:
+        gradient_trace["permission"].clear()
+        gradient_trace["attention"].clear()
         last_train = runner.train_epoch(model, opt, epoch)
-        last_eval = runner.evaluate(model)
-        epoch_row = rounded({"epoch": epoch, **last_train, **last_eval})
+        if gradient_trace["permission"]:
+            last_train["permission_grad_norm"] = float(np.mean(gradient_trace["permission"]))
+        if gradient_trace["attention"]:
+            last_train["attention_parameter_grad_norm"] = float(np.mean(gradient_trace["attention"]))
+        if epoch == epochs or epoch % eval_every == 0:
+            last_eval = runner.evaluate(model)
+        epoch_row = rounded({"epoch": epoch, **last_train, **last_eval} if (epoch == epochs or epoch % eval_every == 0) else {"epoch": epoch, **last_train})
         epoch_rows.append(epoch_row)
         iterator.set_postfix(metric=epoch_row.get("primary_metric", ""), loss=epoch_row.get("eval_loss", ""))
+
+    inference_control: dict[str, float] = {}
+    if spec.domain == "ctdg" and spec.variant == "correct_path_warrant" and getattr(model, "edge_warrant", None) is not None:
+        # Evaluate the trained checkpoint twice with identical sampled negatives.
+        # Only the learned item gate is bypassed in the second pass.
+        numpy_state = np.random.get_state()
+        torch_state = torch.random.get_rng_state()
+        cuda_state = torch.cuda.get_rng_state(device) if device.type == "cuda" else None
+        native_eval = runner.evaluate(model)
+        np.random.set_state(numpy_state)
+        torch.random.set_rng_state(torch_state)
+        if cuda_state is not None:
+            torch.cuda.set_rng_state(cuda_state, device)
+        original_edge_warrant = model.edge_warrant
+        model.edge_warrant = ctdg.OpenPathEdgeAdapter(original_edge_warrant)
+        g1_eval = runner.evaluate(model)
+        model.edge_warrant = original_edge_warrant
+        inference_control = {
+            "inference_native_primary": float(native_eval["primary_metric"]),
+            "inference_g1_primary": float(g1_eval["primary_metric"]),
+            "inference_g1_delta": float(native_eval["primary_metric"] - g1_eval["primary_metric"]),
+        }
 
     try:
         audit = audit_warrant_application(model, spec) if spec.use_warrant else {
@@ -125,6 +166,7 @@ def run_spec(config: dict[str, Any], spec, device: torch.device, out_dir: Path, 
         "output_dir": str(out_dir.relative_to(REPO_ROOT)),
         **path_metadata(spec.domain, spec.variant),
         **audit,
+        **inference_control,
     }
     metric_keys = [
         "accuracy",
@@ -147,11 +189,17 @@ def run_spec(config: dict[str, Any], spec, device: torch.device, out_dir: Path, 
         "warrant_logit_mean",
         "edge_warrant_gate_mean",
         "edge_warrant_attention_entropy",
+        "edge_warrant_gate_std",
+        "edge_warrant_gate_high_fraction",
+        "edge_warrant_gate_low_fraction",
         "warrant_tail_mass_mean",
     ]
     for key in metric_keys:
         if key in last_eval:
             row[key] = last_eval[key]
+    for key in ("edge_gate_grad_norm", "edge_attention_grad_norm", "permission_grad_norm", "attention_parameter_grad_norm"):
+        if key in last_train:
+            row[key] = last_train[key]
     row = rounded(row)
 
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -160,6 +208,10 @@ def run_spec(config: dict[str, Any], spec, device: torch.device, out_dir: Path, 
         json.dump(row, handle, indent=2, sort_keys=True)
     with (out_dir / "run_config.json").open("w", encoding="utf-8") as handle:
         json.dump({"spec": spec.__dict__, "variant": config["variants"][spec.variant]}, handle, indent=2, sort_keys=True, default=str)
+    if bool(training.get("save_checkpoint", False)):
+        torch.save(model.state_dict(), out_dir / "model_state.pt")
+    for handle in hook_handles:
+        handle.remove()
     return row
 
 

@@ -1,0 +1,45 @@
+experiment:
+  name: bert_hotpotqa_qiu_comparison
+  seeds: [7, 17, 37, 47, 57]
+  device: cuda:0
+  output_root: experiments/qiu_gated_attention/outputs
+  skip_completed: true
+
+dataset:
+  name: hotpotqa
+  path: data/processed/rag/hotpotqa/examples.jsonl
+
+model:
+  model_name: roberta-base
+  max_length: 384
+  freeze_encoder: false
+  dropout: 0.1
+  gate_init: 0.95
+  gate_leak: 0.05
+
+candidate_builder:
+  max_questions: 2000
+  max_candidates_per_question: 8
+  hard_distractors: 4
+  random_distractors: 2
+  eval_ratio: 0.2
+
+training:
+  epochs: 2
+  batch_size: 8
+  eval_batch_size: 8
+  learning_rate: 0.00002
+  gate_learning_rate_multiplier: 10.0
+  permission_aux_weight: 0.0
+  permission_aux_margin: 0.02
+  debug_gate: false
+  weight_decay: 0.01
+  gradient_clip: 1.0
+  progress: false
+
+variants:
+  - base
+  - open_path_no_gate
+  - qiu_g2
+  - qiu_g1
+  - full_warrant

@@ -1,0 +1,21 @@
+{
+  "dataset": "earthquake",
+  "domain": "stpp",
+  "effective_implementation": "DeepSTPP",
+  "elapsed_sec": 58.76,
+  "eval_loss": 3.588151,
+  "examples": 65532.0,
+  "implementation": "reference",
+  "joint_nll": 3.588151,
+  "mae_time": 0.320066,
+  "model": "DeepSTPP",
+  "output_dir": "experiments/main_benchmark/openpath_shards/stpp_deepstpp/DeepSTPP/7/stpp/earthquake/open_path_no_gate",
+  "primary_metric": 0.981095,
+  "rmse_location": 0.981095,
+  "seed": 7,
+  "status": "completed",
+  "train_loss": 3.558806,
+  "variant": "open_path_no_gate",
+  "warrant_active_blocks": 1.0,
+  "warrant_replacements": 0.0
+}

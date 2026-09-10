@@ -165,6 +165,25 @@ def build_benchmark_model(spec: RunSpec, frame: Any, config: dict[str, Any], dev
     return model.to(device)
 
 
+def configure_control_variant(model: torch.nn.Module, spec: RunSpec) -> None:
+    """Apply architecture-matched benchmark controls after model construction."""
+    if spec.variant != "open_path_no_gate":
+        return
+    # Imported lazily to avoid a module-level cycle: path_localization runners
+    # reuse RunSpec and model construction from this module.
+    from experiments.path_localization import ctdg, mtpp, rag, stpp, tkg
+    from experiments.path_localization.common import configure_variant
+
+    configure_variant(model, spec)
+    {
+        "ctdg": ctdg.configure_model,
+        "mtpp": mtpp.configure_model,
+        "rag": rag.configure_model,
+        "stpp": stpp.configure_model,
+        "tkg": tkg.configure_model,
+    }[spec.domain](model, spec.variant)
+
+
 def audit_warrant_application(model: torch.nn.Module, spec: RunSpec) -> dict[str, Any]:
     active_wrappers = (
         WarrantedDyGLibMultiHeadAttention,
@@ -206,15 +225,27 @@ def audit_warrant_application(model: torch.nn.Module, spec: RunSpec) -> dict[str
 
 
 def binary_auc(labels: list[float], scores: list[float]) -> float:
-    positives = [(score, label) for score, label in zip(scores, labels) if label > 0.5]
-    negatives = [(score, label) for score, label in zip(scores, labels) if label <= 0.5]
-    if not positives or not negatives:
+    labels_array = np.asarray(labels, dtype=np.float64) > 0.5
+    scores_array = np.asarray(scores, dtype=np.float64)
+    positive_count = int(labels_array.sum())
+    negative_count = int(labels_array.size - positive_count)
+    if positive_count == 0 or negative_count == 0:
         return float("nan")
-    wins = 0.0
-    for p_score, _ in positives:
-        for n_score, _ in negatives:
-            wins += 1.0 if p_score > n_score else 0.5 if p_score == n_score else 0.0
-    return wins / (len(positives) * len(negatives))
+    # Mann-Whitney U with average ranks is exactly the pairwise definition
+    # above, including half credit for tied positive/negative scores.
+    order = np.argsort(scores_array, kind="mergesort")
+    sorted_scores = scores_array[order]
+    ranks = np.empty(scores_array.size, dtype=np.float64)
+    start = 0
+    while start < scores_array.size:
+        end = start + 1
+        while end < scores_array.size and sorted_scores[end] == sorted_scores[start]:
+            end += 1
+        ranks[order[start:end]] = 0.5 * (start + 1 + end)
+        start = end
+    positive_rank_sum = float(ranks[labels_array].sum())
+    wins = positive_rank_sum - positive_count * (positive_count + 1) / 2.0
+    return wins / (positive_count * negative_count)
 
 
 def build_ctdg_node_histories(
@@ -295,6 +326,7 @@ def run_ctdg(spec: RunSpec, config: dict[str, Any], device: torch.device) -> dic
     frame["timestamp"] = pd.to_numeric(frame["timestamp"], errors="coerce").fillna(0.0).astype("float32")
     train_idx, eval_idx = split_indices(len(frame), float(training["eval_ratio"]))
     model = build_benchmark_model(spec, frame, config, device)
+    configure_control_variant(model, spec)
     model_audit = audit_warrant_application(model, spec)
     opt = torch.optim.AdamW(model.parameters(), lr=float(training["learning_rate"]), weight_decay=float(training.get("weight_decay", 0.0)))
     history_len = int(training["history_len"])
@@ -582,6 +614,7 @@ def run_mtpp(spec: RunSpec, config: dict[str, Any], device: torch.device) -> dic
         raise ValueError("Not enough MTPP windows")
     train_idx, eval_idx = split_indices(len(windows), float(training["eval_ratio"]))
     model = build_benchmark_model(spec, frame, config, device)
+    configure_control_variant(model, spec)
     model_audit = audit_warrant_application(model, spec)
     opt = torch.optim.AdamW(model.parameters(), lr=float(training["learning_rate"]), weight_decay=float(training.get("weight_decay", 0.0)))
 
@@ -718,6 +751,7 @@ def run_stpp(spec: RunSpec, config: dict[str, Any], device: torch.device) -> dic
         raise ValueError("Not enough STPP windows")
     train_idx, eval_idx = split_indices(len(windows), float(training["eval_ratio"]))
     model = build_benchmark_model(spec, frame, config, device)
+    configure_control_variant(model, spec)
     model_audit = audit_warrant_application(model, spec)
     opt = torch.optim.AdamW(model.parameters(), lr=float(training["learning_rate"]), weight_decay=float(training.get("weight_decay", 0.0)))
     num_marks = int(frame["mark_id"].max()) + 1
@@ -826,6 +860,7 @@ def run_tkg(spec: RunSpec, config: dict[str, Any], device: torch.device) -> dict
         frame = chronological_sample(raw_frame, max_examples)
         train_idx, eval_idx = split_indices(len(frame), eval_ratio)
     model = build_benchmark_model(spec, frame, config, device)
+    configure_control_variant(model, spec)
     model_audit = audit_warrant_application(model, spec)
     lr_key = "warrant_learning_rate" if spec.use_warrant else "learning_rate"
     learning_rate = float(spec.model_config.get(lr_key, spec.model_config.get("learning_rate", training["learning_rate"])))
@@ -1186,6 +1221,7 @@ def run_rag(spec: RunSpec, config: dict[str, Any], device: torch.device) -> dict
     train_idx, eval_idx = split_indices(len(examples), float(training["eval_ratio"]))
     frame_stub = {"vocab_size": vocab_size}
     model = build_benchmark_model(spec, frame_stub, config, device)
+    configure_control_variant(model, spec)
     model_audit = audit_warrant_application(model, spec)
     opt = torch.optim.AdamW(model.parameters(), lr=float(training["learning_rate"]), weight_decay=float(training.get("weight_decay", 0.0)))
 

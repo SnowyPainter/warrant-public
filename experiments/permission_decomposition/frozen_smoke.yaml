@@ -1,0 +1,19 @@
+experiment: {name: frozen_smoke, seeds: [7], device: cuda:0, output_root: experiments/permission_decomposition/outputs_frozen_smoke}
+training: {implementation: reference, progress: false, max_examples: 512, epochs: 1, batch_size: 128, learning_rate: 0.001, weight_decay: 0.0, history_len: 20, eval_ratio: 0.2, dropout: 0.1}
+warrant: {gate_init: 0.95, gate_leak: 0.05}
+tkg: {strict_time_history: false}
+variants:
+  open_path_no_gate: {description: smoke}
+  correct_path_warrant: {description: smoke}
+  attention_adapter: {description: smoke}
+tasks:
+  rag:
+    dataset: hotpotqa
+    path: data/processed/rag/hotpotqa/examples.jsonl
+    model: FiD
+    model_config: {vocab_size: 32128, hidden_dim: 96, fusion_layers: 1, batch_size: 128, eval_batch_size: 128, gate_leak: 0.7, max_passages: 5, question_len: 32, passage_len: 48}
+  tkg:
+    dataset: gdelt
+    path: data/processed/tkg/gdelt/facts.csv
+    model: xERTE
+    model_config: {num_entities: auto, num_relations: auto, hidden_dim: 128, time_dim: 32, expansion_layers: 2}

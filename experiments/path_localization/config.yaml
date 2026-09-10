@@ -39,6 +39,18 @@ variants:
     description: Warrant on the localized metric-defining weighted value path.
   shuffled_pairing:
     description: Correct-path Warrant evaluated with query-item pairing deliberately mismatched.
+  scalar_gate:
+    description: Open metric-facing path with one query-conditioned scalar shared by all history items.
+  item_only_gate:
+    description: Open metric-facing path with item-conditioned gates that do not observe the current query.
+  normalized_gate:
+    description: Full query-item gate renormalized to preserve total attention mass.
+  attention_adapter:
+    description: Capacity control that uses the query-item scorer to alter normalized attention weights.
+  generic_open_path:
+    description: Generic attention Warrant plus the metric-facing edge path with its edge gate fixed to one.
+  combined_full:
+    description: Generic attention Warrant plus the learned metric-facing edge permission gate.
 
 tasks:
   ctdg:

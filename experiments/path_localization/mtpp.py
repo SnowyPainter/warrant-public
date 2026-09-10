@@ -4,7 +4,7 @@ import torch
 import torch.nn.functional as F
 
 from experiments.neural_dissection.run import MTPPRunner, batches, finite_mean, gate_stats
-from experiments.path_localization.common import force_open_warrant_block
+from experiments.path_localization.common import decompose_warrant_block, force_open_warrant_block
 from experiments.path_localization.rag import _nontrivial_permutation
 
 
@@ -57,8 +57,12 @@ class PathMTPPRunner(MTPPRunner):
 
 
 def configure_model(model: torch.nn.Module, variant: str) -> None:
-    if variant == "open_path_no_gate":
+    if variant in {"open_path_no_gate", "generic_open_path"}:
         if getattr(model, "candidate_warrant", None) is None:
             raise ValueError("MTPP open_path_no_gate requires a candidate Warrant path")
         force_open_warrant_block(model.candidate_warrant)
+    elif variant in {"scalar_gate", "item_only_gate", "normalized_gate", "attention_adapter"}:
+        if getattr(model, "candidate_warrant", None) is None:
+            raise ValueError(f"MTPP {variant} requires a candidate Warrant path")
+        decompose_warrant_block(model.candidate_warrant, variant)
     return None

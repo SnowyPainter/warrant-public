@@ -1,0 +1,1 @@
+domains=['tkg'] variants=['scalar_gate', 'item_only_gate', 'normalized_gate', 'attention_adapter'] seeds=[7, 17, 37] runs=12 device=cuda:0

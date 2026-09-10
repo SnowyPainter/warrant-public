@@ -1,0 +1,23 @@
+{
+  "epoch": 30,
+  "train_loss": 0.2773070514780804,
+  "gate_mean": 1.0,
+  "warrant_logit_mean": 0.0,
+  "eval_loss": 3.0780914380000186,
+  "primary_metric": 0.6559239588536463,
+  "support_precision": 0.44447625941766566,
+  "support_recall": 0.44447625941766566,
+  "support_f1": 0.44447625941766566,
+  "support_recall_at_1": 0.46487691995504493,
+  "support_mrr": 0.6559239588536463,
+  "support_recall_at_2": 0.6664770776098901,
+  "support_recall_at_5": 1.0,
+  "support_ap": 0.6385527978423485,
+  "support_auc": 0.6642327619232155,
+  "support_warrant_mass": 0.24644486696683449,
+  "distractor_warrant_mass": 0.7535551327581061,
+  "support_mass_ratio": 0.24644486710590566,
+  "support_attention_mass": 0.24644486696683449,
+  "distractor_attention_mass": 0.7535551327581061,
+  "support_attention_ratio": 0.24644486710590566
+}

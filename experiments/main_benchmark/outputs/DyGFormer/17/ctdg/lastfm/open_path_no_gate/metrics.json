@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.827777,
+  "auc": 0.902106,
+  "dataset": "lastfm",
+  "domain": "ctdg",
+  "effective_implementation": "DyGFormer",
+  "elapsed_sec": 148.29,
+  "eval_loss": 0.587834,
+  "examples": 65536.0,
+  "implementation": "reference",
+  "model": "DyGFormer",
+  "output_dir": "experiments/main_benchmark/outputs/DyGFormer/17/ctdg/lastfm/open_path_no_gate",
+  "primary_metric": 0.902106,
+  "seed": 17,
+  "status": "completed",
+  "train_loss": 0.214427,
+  "variant": "open_path_no_gate",
+  "warrant_active_blocks": 3.0,
+  "warrant_replacements": 2.0
+}

@@ -1,0 +1,2 @@
+distractor_attention_mass,distractor_warrant_mass,epoch,eval_loss,gate_mean,primary_metric,support_ap,support_attention_mass,support_attention_ratio,support_auc,support_f1,support_mass_ratio,support_mrr,support_precision,support_recall,support_recall_at_1,support_recall_at_2,support_recall_at_5,support_warrant_mass,train_loss,warrant_logit_mean
+0.708582,0.698184,1,1.617281,0.985326,0.595146,0.565534,0.291418,0.291418,0.564146,0.34466,0.291418,0.595146,0.34466,0.34466,0.38835,0.572816,1.0,0.287142,1.634368,2.967559

@@ -1,0 +1,21 @@
+{
+  "accuracy": 0.403522,
+  "dataset": "stackoverflow",
+  "domain": "mtpp",
+  "effective_implementation": "SAHP",
+  "elapsed_sec": 63.359,
+  "eval_loss": 1.792781,
+  "examples": 64160.0,
+  "implementation": "reference",
+  "mae_time": 0.591139,
+  "mark_mrr": 0.604656,
+  "model": "SAHP",
+  "output_dir": "experiments/main_benchmark/openpath_shards/mtpp_sahp/SAHP/37/mtpp/stackoverflow/open_path_no_gate",
+  "primary_metric": 0.604656,
+  "seed": 37,
+  "status": "completed",
+  "train_loss": 1.664704,
+  "variant": "open_path_no_gate",
+  "warrant_active_blocks": 1.0,
+  "warrant_replacements": 0.0
+}

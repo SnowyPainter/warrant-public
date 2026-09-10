@@ -74,6 +74,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seed", default=None, help="Seed, comma list, or all. Overrides config.")
     parser.add_argument("--force", action="store_true", help="Re-run rows already marked completed in results.csv.")
     parser.add_argument("--dry-run", action="store_true", help="Print selected runs without training.")
+    parser.add_argument("--output-root", type=Path, default=None, help="Override output root for an isolated run shard.")
     return parser.parse_args()
 
 
@@ -330,7 +331,11 @@ def run_spec(spec: RunSpec, config: dict[str, Any], device: torch.device, output
 def main() -> None:
     args = parse_args()
     config = load_config(args.config)
-    output_root = REPO_ROOT / config.get("experiment", {}).get("output_root", "experiments/main_benchmark/outputs")
+    output_root = (
+        args.output_root.resolve()
+        if args.output_root is not None
+        else REPO_ROOT / config.get("experiment", {}).get("output_root", "experiments/main_benchmark/outputs")
+    )
     results_path = output_root / "results.csv"
     device = resolve_device(config.get("experiment", {}).get("device", "auto"))
     specs = iter_specs(config, args)

@@ -332,13 +332,13 @@ class EdgeConditionedWarrantBlock(nn.Module):
         delta_t_enc: torch.Tensor,
         stats: torch.Tensor,
         valid_mask: torch.Tensor,
-    ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+    ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
         tokens = self.token_encoder(torch.cat([memory, stats], dim=-1))
         tokens = tokens * valid_mask.unsqueeze(-1).to(tokens.dtype)
         weights = self._semantic_attention(query, tokens, delta_t_enc, valid_mask)
         gate, logits = self.validity(query, tokens, delta_t_enc, stats, valid_mask)
         context = (tokens * weights.unsqueeze(-1) * gate.unsqueeze(-1)).sum(dim=1)
-        return context, gate, weights
+        return context, gate, weights, logits
 
     def forward(
         self,
@@ -356,13 +356,17 @@ class EdgeConditionedWarrantBlock(nn.Module):
         dst_mask: torch.Tensor,
     ) -> tuple[torch.Tensor, torch.Tensor, dict[str, torch.Tensor]]:
         query = self.query_encoder(torch.cat([src_h, dst_h, time_h], dim=-1))
-        src_context, src_gate, src_weights = self._side_context(query, src_memory, src_delta_t_enc, src_stats, src_mask)
-        dst_context, dst_gate, dst_weights = self._side_context(query, dst_memory, dst_delta_t_enc, dst_stats, dst_mask)
+        src_context, src_gate, src_weights, src_logits = self._side_context(query, src_memory, src_delta_t_enc, src_stats, src_mask)
+        dst_context, dst_gate, dst_weights, dst_logits = self._side_context(query, dst_memory, dst_delta_t_enc, dst_stats, dst_mask)
         delta = self.context_proj(torch.cat([src_context, dst_context], dim=-1))
         src_delta, dst_delta = delta.chunk(2, dim=-1)
 
         valid_count = src_mask.float().sum() + dst_mask.float().sum()
         validity_mean = (src_gate.sum() + dst_gate.sum()) / valid_count.clamp_min(1.0)
+        valid_gates = torch.cat([src_gate[src_mask], dst_gate[dst_mask]])
+        validity_std = valid_gates.std(unbiased=False) if valid_gates.numel() else validity_mean.new_zeros(())
+        saturation_high = (valid_gates > 0.99).float().mean() if valid_gates.numel() else validity_mean.new_zeros(())
+        saturation_low = (valid_gates < 0.10).float().mean() if valid_gates.numel() else validity_mean.new_zeros(())
         entropy = 0.5 * (
             -(src_weights.clamp_min(1.0e-8) * src_weights.clamp_min(1.0e-8).log()).sum(dim=-1).mean()
             - (dst_weights.clamp_min(1.0e-8) * dst_weights.clamp_min(1.0e-8).log()).sum(dim=-1).mean()
@@ -371,7 +375,12 @@ class EdgeConditionedWarrantBlock(nn.Module):
         self.last_attention_entropy = entropy.detach()
         info = {
             "edge_warrant_gate_mean": validity_mean.detach(),
+            "edge_warrant_gate_std": validity_std.detach(),
+            "edge_warrant_gate_high_fraction": saturation_high.detach(),
+            "edge_warrant_gate_low_fraction": saturation_low.detach(),
             "edge_warrant_attention_entropy": entropy.detach(),
+            "raw_edge_warrant_logits": torch.cat([src_logits[src_mask], dst_logits[dst_mask]]),
+            "edge_warrant_targets": torch.cat([src_stats[..., 0][src_mask], dst_stats[..., 0][dst_mask]]),
         }
         return self.context_scale * src_delta, self.context_scale * dst_delta, info
 

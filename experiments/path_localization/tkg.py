@@ -4,7 +4,8 @@ import torch
 import torch.nn.functional as F
 
 from experiments.neural_dissection.run import TKGRunner, batches, finite_mean, gate_stats
-from experiments.path_localization.common import set_attention_warrant
+from experiments.path_localization.common import decompose_warrant_block, set_attention_warrant
+from models.attention import WarrantedAttention
 from experiments.path_localization.rag import _nontrivial_permutation
 
 
@@ -53,6 +54,17 @@ def configure_model(model: torch.nn.Module, variant: str) -> None:
         model.tail_path_mode = "open_no_gate"
         model.warrant_expected = False
         return
-    if variant in {"correct_path_warrant", "shuffled_pairing"}:
+    if variant in {"correct_path_warrant", "shuffled_pairing", "combined_full"}:
         set_attention_warrant(model, True)
         model.tail_path_mode = "warrant"
+        return
+    if variant in {"scalar_gate", "item_only_gate", "normalized_gate", "attention_adapter"}:
+        set_attention_warrant(model, True)
+        model.tail_path_mode = "warrant"
+        for module in model.modules():
+            if isinstance(module, WarrantedAttention):
+                decompose_warrant_block(module.warrant, variant)
+        return
+    if variant == "generic_open_path":
+        set_attention_warrant(model, True)
+        model.tail_path_mode = "open_no_gate"

@@ -1,0 +1,2 @@
+accuracy,auc,edge_attention_grad_norm,edge_gate_grad_norm,edge_warrant_attention_entropy,edge_warrant_gate_mean,epoch,eval_loss,gate_mean,primary_metric,train_loss,warrant_logit_mean
+0.504854,0.47997,0.0,0.0,1.360214,0.950004,1,0.835276,1.0,0.47997,0.762687,0.0

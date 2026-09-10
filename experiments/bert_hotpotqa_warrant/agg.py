@@ -12,6 +12,8 @@ OUT = ROOT / "experiments" / "bert_hotpotqa_warrant" / "outputs" / "analysis"
 
 VARIANT_ORDER = [
     "base",
+    "qiu_g2",
+    "qiu_g1",
     "post_mlp",
     "query_only_gate",
     "shuffled_warrant",

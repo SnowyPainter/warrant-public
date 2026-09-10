@@ -102,6 +102,9 @@ SCALAR_AUX_KEYS = (
     "warrant_gate_mean",
     "warrant_logit_mean",
     "edge_warrant_gate_mean",
+    "edge_warrant_gate_std",
+    "edge_warrant_gate_high_fraction",
+    "edge_warrant_gate_low_fraction",
     "edge_warrant_attention_entropy",
     "warrant_tail_mass_mean",
     "copy_gate_mean",
@@ -214,6 +217,7 @@ class CTDGRunner(DomainRunner):
     def train_epoch(self, model: torch.nn.Module, opt: torch.optim.Optimizer, epoch: int) -> dict[str, float]:
         model.train()
         losses, aux_rows = [], []
+        gate_grad_norms, attention_grad_norms = [], []
         for rows in batches(self.train_idx, self.batch_size, shuffle=True, desc=f"{self.spec.model} {self.spec.variant} train e{epoch}", config=self.config):
             pos = self.make_batch(rows, negative=False)
             neg = self.make_batch(rows, negative=True)
@@ -222,12 +226,39 @@ class CTDGRunner(DomainRunner):
             logits = torch.cat([pos_result.logits, neg_result.logits])
             labels = torch.cat([torch.ones_like(pos_result.logits), torch.zeros_like(neg_result.logits)])
             loss = F.binary_cross_entropy_with_logits(logits, labels)
+            edge_aux_weight = float(self.training.get("edge_gate_aux_weight", 0.0))
+            if edge_aux_weight > 0.0:
+                edge_aux_terms = []
+                for result in (pos_result, neg_result):
+                    raw = result.aux.get("raw_edge_warrant_logits")
+                    target = result.aux.get("edge_warrant_targets")
+                    if raw is not None and target is not None and raw.numel() > 0:
+                        edge_aux_terms.append(F.binary_cross_entropy_with_logits(raw, target.to(raw.dtype)))
+                if edge_aux_terms:
+                    loss = loss + edge_aux_weight * torch.stack(edge_aux_terms).mean()
             opt.zero_grad()
             loss.backward()
+            gate_sq = 0.0
+            attention_sq = 0.0
+            for name, parameter in model.named_parameters():
+                if parameter.grad is None:
+                    continue
+                squared = float(parameter.grad.detach().float().pow(2).sum().cpu())
+                if "edge_warrant.validity" in name:
+                    gate_sq += squared
+                elif "edge_warrant.q_proj" in name or "edge_warrant.k_proj" in name or ".attn.query_proj" in name or ".attn.key_proj" in name:
+                    attention_sq += squared
+            gate_grad_norms.append(gate_sq ** 0.5)
+            attention_grad_norms.append(attention_sq ** 0.5)
             opt.step()
             losses.append(float(loss.detach().cpu()))
             aux_rows.extend([pos_result.aux, neg_result.aux])
-        return {"train_loss": finite_mean(losses), **gate_stats(aux_rows)}
+        return {
+            "train_loss": finite_mean(losses),
+            "edge_gate_grad_norm": finite_mean(gate_grad_norms),
+            "edge_attention_grad_norm": finite_mean(attention_grad_norms),
+            **gate_stats(aux_rows),
+        }
 
     def evaluate(self, model: torch.nn.Module) -> dict[str, float]:
         model.eval()

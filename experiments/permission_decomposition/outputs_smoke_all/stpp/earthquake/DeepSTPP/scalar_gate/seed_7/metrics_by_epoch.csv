@@ -1,0 +1,2 @@
+epoch,eval_loss,gate_mean,joint_nll,mae_time,primary_metric,rmse_location,train_loss,warrant_logit_mean
+1,5.011669,0.952507,5.011669,0.753121,1.415162,1.415162,5.601779,2.944585

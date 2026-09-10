@@ -1,0 +1,21 @@
+{
+  "accuracy": 0.394327,
+  "dataset": "stackoverflow",
+  "domain": "mtpp",
+  "effective_implementation": "AttNHP",
+  "elapsed_sec": 71.284,
+  "eval_loss": 1.802034,
+  "examples": 64160.0,
+  "implementation": "reference",
+  "mae_time": 0.586972,
+  "mark_mrr": 0.599262,
+  "model": "AttNHP",
+  "output_dir": "experiments/main_benchmark/openpath_shards/mtpp_attnhp/AttNHP/37/mtpp/stackoverflow/open_path_no_gate",
+  "primary_metric": 0.599262,
+  "seed": 37,
+  "status": "completed",
+  "train_loss": 1.645039,
+  "variant": "open_path_no_gate",
+  "warrant_active_blocks": 1.0,
+  "warrant_replacements": 0.0
+}

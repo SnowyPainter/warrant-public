@@ -1,0 +1,56 @@
+experiment:
+  name: permission_controls_main_budget
+  seeds: [7, 17, 37]
+  device: cuda:0
+  output_root: experiments/permission_decomposition/outputs_full_controls
+  skip_completed: true
+selection:
+  domains: [ctdg, mtpp, rag, stpp, tkg]
+  variants: [scalar_gate, item_only_gate, normalized_gate, attention_adapter]
+training:
+  implementation: reference
+  progress: true
+  max_examples: 65536
+  epochs: 30
+  batch_size: 2048
+  learning_rate: 0.001
+  weight_decay: 0.0
+  history_len: 50
+  eval_ratio: 0.2
+  dropout: 0.1
+  save_checkpoint: true
+  track_gradients: false
+  eval_every: 30
+warrant: {gate_init: 0.95, gate_leak: 0.05}
+tkg: {strict_time_history: false}
+variants:
+  scalar_gate: {description: "One query-conditioned scalar shared across items."}
+  item_only_gate: {description: "Item-conditioned gate without query conditioning."}
+  normalized_gate: {description: "Query-item permission with total mass preserved."}
+  attention_adapter: {description: "Capacity-matched q-item additive attention-logit adapter."}
+tasks:
+  ctdg:
+    dataset: lastfm
+    path: data/processed/ctdg/lastfm/events.csv
+    model: DyGFormer
+    model_config: {num_nodes: auto, edge_feat_dim: 1, hidden_dim: 128, time_dim: 32, num_layers: 2}
+  mtpp:
+    dataset: retweets
+    path: data/processed/mtpp/retweets/events.csv
+    model: THP
+    model_config: {num_event_types: auto, hidden_dim: 128, time_dim: 32, num_layers: 2}
+  rag:
+    dataset: hotpotqa
+    path: data/processed/rag/hotpotqa/examples.jsonl
+    model: FiD
+    model_config: {vocab_size: 32128, hidden_dim: 96, fusion_layers: 1, batch_size: 512, eval_batch_size: 512, gate_leak: 0.7, max_passages: 5, question_len: 32, passage_len: 48}
+  stpp:
+    dataset: earthquake
+    path: data/processed/stpp/earthquake/events.csv
+    model: DeepSTPP
+    model_config: {num_marks: auto, hidden_dim: 128, time_dim: 32, num_layers: 2}
+  tkg:
+    dataset: gdelt
+    path: data/processed/tkg/gdelt/facts.csv
+    model: xERTE
+    model_config: {num_entities: auto, num_relations: auto, hidden_dim: 128, time_dim: 32, expansion_layers: 2}

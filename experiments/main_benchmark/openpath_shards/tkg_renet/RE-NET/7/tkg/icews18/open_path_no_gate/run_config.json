@@ -1,0 +1,23 @@
+{
+  "dataset": "icews18",
+  "dataset_path": "data/processed/tkg/icews18/facts.csv",
+  "domain": "tkg",
+  "implementation": "reference",
+  "model": "RE-NET",
+  "model_config": {
+    "hidden_dim": 128,
+    "num_entities": "auto",
+    "num_relations": "auto",
+    "time_dim": 32
+  },
+  "seed": 7,
+  "use_warrant": true,
+  "variant": "open_path_no_gate",
+  "warrant": {
+    "aux_weight": 0.0,
+    "context_fields": [],
+    "context_schema": "none",
+    "gate_init": 0.95,
+    "gate_leak": 0.05
+  }
+}

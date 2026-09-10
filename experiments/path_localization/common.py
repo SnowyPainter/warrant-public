@@ -11,6 +11,7 @@ from typing import Any, Iterable
 import numpy as np
 import torch
 import yaml
+from torch import nn
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
@@ -54,6 +55,16 @@ RESULT_COLUMNS = [
     "warrant_logit_mean",
     "edge_warrant_gate_mean",
     "edge_warrant_attention_entropy",
+    "edge_warrant_gate_std",
+    "edge_warrant_gate_high_fraction",
+    "edge_warrant_gate_low_fraction",
+    "edge_gate_grad_norm",
+    "edge_attention_grad_norm",
+    "permission_grad_norm",
+    "attention_parameter_grad_norm",
+    "inference_native_primary",
+    "inference_g1_primary",
+    "inference_g1_delta",
     "warrant_tail_mass_mean",
     "warrant_active_blocks",
     "warrant_replacements",
@@ -115,6 +126,14 @@ VARIANT_ROLES = {
     "open_path_no_gate": "metric_path_open_g_equals_one",
     "correct_path_warrant": "metric_defining_path",
     "shuffled_pairing": "query_item_pairing_control",
+    "scalar_gate": "metric_path_query_scalar_gate",
+    "item_only_gate": "metric_path_item_only_gate",
+    "normalized_gate": "metric_path_normalized_query_item_gate",
+    "attention_adapter": "metric_path_attention_reweighting_control",
+    "generic_open_path": "generic_gate_plus_metric_path_g_equals_one",
+    "combined_full": "generic_gate_plus_metric_path_query_item_gate",
+    "frozen_gate": "frozen_backbone_metric_path_query_item_gate",
+    "frozen_attention_adapter": "frozen_backbone_metric_path_attention_reweighting",
 }
 
 
@@ -326,6 +345,88 @@ def force_open_warrant_block(block: WarrantBlock) -> None:
     block.forward = types.MethodType(open_forward, block)
 
 
+def decompose_warrant_block(block: WarrantBlock, mode: str) -> None:
+    """Give a metric-facing WarrantBlock exactly one weighting freedom.
+
+    The path, output projection, mask, and dropout are shared across controls.
+    ``normalized_gate`` preserves total mass, while ``attention_adapter`` uses
+    the capacity-matched q-item scorer solely as a normalized routing adapter.
+    """
+    if mode not in {"scalar_gate", "item_only_gate", "normalized_gate", "attention_adapter"}:
+        raise ValueError(f"Unsupported WarrantBlock decomposition mode: {mode}")
+    if mode == "scalar_gate":
+        block.scalar_scorer = nn.Linear(block.query_dim, 1)
+        nn.init.zeros_(block.scalar_scorer.weight)
+        nn.init.constant_(block.scalar_scorer.bias, 2.944439)
+    elif mode == "item_only_gate":
+        block.item_scorer = nn.Linear(block.key_dim, 1)
+        nn.init.zeros_(block.item_scorer.weight)
+        nn.init.constant_(block.item_scorer.bias, 2.944439)
+
+    def decomposed_forward(
+        self: WarrantBlock,
+        query: torch.Tensor,
+        key: torch.Tensor,
+        value: torch.Tensor,
+        *,
+        attention_logits: torch.Tensor | None = None,
+        attention_weights: torch.Tensor | None = None,
+        mask: torch.Tensor | None = None,
+    ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
+        squeeze_query = query.ndim == 2
+        if squeeze_query:
+            query = query.unsqueeze(1)
+        batch_size, query_len, _ = query.shape
+        key_len = key.shape[1]
+        pair_mask = self._pair_mask(mask, batch_size, query_len, key_len, query.device)
+        if attention_weights is None:
+            if attention_logits is None:
+                attention_logits = torch.matmul(query, key.transpose(1, 2)) / math.sqrt(float(key.shape[-1]))
+            attention_logits = attention_logits.masked_fill(~pair_mask, torch.finfo(attention_logits.dtype).min)
+            attention_logits = torch.where(~pair_mask.any(dim=-1, keepdim=True), torch.zeros_like(attention_logits), attention_logits)
+            alpha = torch.softmax(attention_logits, dim=-1)
+        else:
+            alpha = attention_weights.to(device=query.device, dtype=value.dtype) * pair_mask.to(value.dtype)
+
+        if mode == "scalar_gate":
+            logits = self.scalar_scorer(query).expand(-1, -1, key_len)
+        elif mode == "item_only_gate":
+            logits = self.item_scorer(key).squeeze(-1).unsqueeze(1).expand(-1, query_len, -1)
+        else:
+            logits = self._gate_logits(query, key)
+        gate = self.gate_leak + (1.0 - self.gate_leak) * torch.sigmoid(logits)
+        gate = torch.where(pair_mask, gate, torch.zeros_like(gate))
+        logits = torch.where(pair_mask, logits, torch.zeros_like(logits))
+
+        if mode == "attention_adapter":
+            # Capacity-matched attention-only control: use the same q-item
+            # scorer as an additive attention-logit adapter, without sigmoid
+            # permission or independent total-mass control.
+            adapted_logits = alpha.clamp_min(1.0e-9).log() + logits
+            adapted_logits = adapted_logits.masked_fill(~pair_mask, torch.finfo(adapted_logits.dtype).min)
+            effective = torch.softmax(adapted_logits, dim=-1) * pair_mask.to(value.dtype)
+        else:
+            effective = alpha * gate
+        if mode == "normalized_gate":
+            effective = effective / effective.sum(dim=-1, keepdim=True).clamp_min(1.0e-9)
+        effective = self.dropout(effective)
+        output = self.output_proj(torch.sum(effective.unsqueeze(-1) * value.unsqueeze(1), dim=2))
+
+        # Downstream metric paths reconstruct alpha*g from these tensors.  For
+        # normalized controls, expose the effective distribution and unit gate
+        # so that the downstream path receives exactly the context used here.
+        reported_alpha = effective if mode in {"normalized_gate", "attention_adapter"} else alpha
+        reported_gate = pair_mask.to(value.dtype) if mode in {"normalized_gate", "attention_adapter"} else gate
+        if squeeze_query:
+            output = output.squeeze(1)
+            reported_alpha = reported_alpha.squeeze(1)
+            reported_gate = reported_gate.squeeze(1)
+            logits = logits.squeeze(1)
+        return output, reported_alpha, reported_gate, logits
+
+    block.forward = types.MethodType(decomposed_forward, block)
+
+
 def disable_correct_path(model: torch.nn.Module, domain: str) -> None:
     if domain == "ctdg" and hasattr(model, "edge_warrant"):
         model.edge_warrant = None
@@ -354,11 +455,21 @@ def configure_variant(model: torch.nn.Module, spec: RunSpec) -> None:
     elif spec.variant == "generic_qk_warrant":
         set_attention_warrant(model, True)
         disable_correct_path(model, spec.domain)
-    elif spec.variant in {"open_path_no_gate", "correct_path_warrant", "shuffled_pairing"}:
+    elif spec.variant in {
+        "open_path_no_gate",
+        "correct_path_warrant",
+        "shuffled_pairing",
+        "scalar_gate",
+        "item_only_gate",
+        "normalized_gate",
+        "attention_adapter",
+        "generic_open_path",
+        "combined_full",
+    }:
         # Start from a clean localization: generic attention Warrant is off,
         # then each domain explicitly enables it only when that attention module
         # is itself part of the metric-defining path.
-        set_attention_warrant(model, False)
+        set_attention_warrant(model, spec.variant in {"generic_open_path", "combined_full"})
     else:
         raise ValueError(f"Unsupported path-localization variant: {spec.variant}")
 

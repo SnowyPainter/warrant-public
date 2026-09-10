@@ -1,6 +1,22 @@
 {
-  "path_variant": "correct_path_warrant",
-  "source": "experiments/edge_query_adapter_ablation",
-  "source_output_dir": "experiments/edge_query_adapter_ablation/outputs/edge_conditioned_warrant/seed_7",
-  "source_variant": "edge_conditioned_warrant"
+  "spec": {
+    "dataset": "lastfm",
+    "dataset_path": "/workspace/warrant/data/processed/ctdg/lastfm/events.csv",
+    "domain": "ctdg",
+    "implementation": "reference",
+    "model": "DyGFormer",
+    "model_config": {
+      "edge_feat_dim": 1,
+      "hidden_dim": 128,
+      "num_layers": 2,
+      "num_nodes": "auto",
+      "time_dim": 32
+    },
+    "seed": 7,
+    "use_warrant": true,
+    "variant": "correct_path_warrant"
+  },
+  "variant": {
+    "description": "Warrant on the localized metric-defining weighted value path."
+  }
 }

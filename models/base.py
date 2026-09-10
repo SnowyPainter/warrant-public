@@ -28,8 +28,18 @@ class WarrantModel(nn.Module):
             aux["warrant_gate_mean"] = gate.detach().mean()
         if logits is not None:
             aux["warrant_logit_mean"] = logits.detach().mean()
-        for key in ("edge_warrant_gate_mean", "edge_warrant_attention_entropy"):
+        for key in (
+            "edge_warrant_gate_mean",
+            "edge_warrant_gate_std",
+            "edge_warrant_gate_high_fraction",
+            "edge_warrant_gate_low_fraction",
+            "edge_warrant_attention_entropy",
+        ):
             value = info.get(key)
             if value is not None:
                 aux[key] = value.detach()
+        for key in ("raw_edge_warrant_logits", "edge_warrant_targets"):
+            value = info.get(key)
+            if value is not None:
+                aux[key] = value
         return aux

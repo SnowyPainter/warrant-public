@@ -1,0 +1,6 @@
+tkg 7 frozen_gate 0.14219045963230068
+tkg 7 frozen_attention_adapter 0.14195511868861474
+tkg 17 frozen_gate 0.14340139158799
+tkg 17 frozen_attention_adapter 0.14309363970786307
+tkg 37 frozen_gate 0.1415060477817167
+tkg 37 frozen_attention_adapter 0.14087048745109115

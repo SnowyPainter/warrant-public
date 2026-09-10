@@ -2,10 +2,11 @@ from __future__ import annotations
 
 import types
 
+import numpy as np
 import torch
 
-from experiments.neural_dissection.run import RAGRunner
-from experiments.path_localization.common import set_attention_warrant
+from experiments.neural_dissection.run import RAGRunner, rag_contexts_to_passages, rag_support_labels, tokenize_text
+from experiments.path_localization.common import decompose_warrant_block, set_attention_warrant
 
 
 def _nontrivial_permutation(batch_size: int, device: torch.device) -> torch.Tensor:
@@ -22,6 +23,31 @@ class PathRAGRunner(RAGRunner):
     rolls the permission mass across passage slots. This breaks the
     question-passage permission pairing without changing the retrieval input.
     """
+
+    def prepare(self):
+        frame = super().prepare()
+        count = len(self.examples)
+        self.question_cache = np.zeros((count, self.question_len), dtype=np.int64)
+        self.passage_cache = np.zeros((count, self.max_passages, self.passage_len), dtype=np.int64)
+        self.mask_cache = np.zeros((count, self.max_passages), dtype=bool)
+        self.support_cache = np.zeros((count, self.max_passages), dtype=np.float32)
+        for idx, example in enumerate(self.examples):
+            self.question_cache[idx] = tokenize_text(example.get("question", ""), self.vocab_size, self.question_len)
+            passages = rag_contexts_to_passages(example.get("contexts"), max_passages=self.max_passages)
+            for passage_idx, passage in enumerate(passages[: self.max_passages]):
+                tokens = tokenize_text(passage["text"], self.vocab_size, self.passage_len)
+                self.passage_cache[idx, passage_idx] = tokens
+                self.mask_cache[idx, passage_idx] = bool(np.any(tokens))
+            self.support_cache[idx] = rag_support_labels(example, passages, max_passages=self.max_passages)
+        return frame
+
+    def make_batch(self, rows: np.ndarray):
+        return (
+            torch.as_tensor(self.question_cache[rows], device=self.device),
+            torch.as_tensor(self.passage_cache[rows], device=self.device),
+            torch.as_tensor(self.mask_cache[rows], dtype=torch.bool, device=self.device),
+            torch.as_tensor(self.support_cache[rows], dtype=torch.float32, device=self.device),
+        )
 
     def evaluate(self, model: torch.nn.Module) -> dict[str, float]:
         if self.spec.variant != "shuffled_pairing":
@@ -53,8 +79,30 @@ def shuffled_support_logits(self, query, memory, context, info, valid_mask):
 
 
 def configure_model(model: torch.nn.Module, variant: str) -> None:
-    if variant in {"correct_path_warrant", "shuffled_pairing"}:
+    if variant == "open_path_no_gate":
+        # Keep the metric-facing passage-mass path created by
+        # ``passage_warrant_scale``, but use ordinary attention mass (g = 1).
+        # No WarrantBlock is expected to remain active in this control.
+        set_attention_warrant(model, False)
+        model.warrant_expected = False
+        return
+    if variant in {"correct_path_warrant", "shuffled_pairing", "combined_full"}:
         set_attention_warrant(model, True)
+        return
+    if variant in {"scalar_gate", "item_only_gate", "normalized_gate", "attention_adapter"}:
+        set_attention_warrant(model, True)
+        decompose_warrant_block(model.attn.warrant, variant)
+        return
+    if variant == "generic_open_path":
+        set_attention_warrant(model, True)
+        # Keep the metric-facing mass path ungated while generic attention
+        # remains warranted.
+        original = model._support_logits
+        def open_metric_logits(self, query, memory, context, info, valid_mask):
+            patched = dict(info)
+            patched["warrant_gate"] = torch.ones_like(info["attention"])
+            return original(query, memory, context, patched, valid_mask)
+        model._support_logits = types.MethodType(open_metric_logits, model)
         return
     if variant == "generic_qk_warrant":
         original = model._support_logits
